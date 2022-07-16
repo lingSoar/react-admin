@@ -1,0 +1,3 @@
+# ESlint 检测的文件忽略配置
+
+# 忽略src/utils 中所有代码的检测 => src/utils/*

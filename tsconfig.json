@@ -1,0 +1,38 @@
+// ts 的配置文件
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "allowJs": false,
+        "skipLibCheck": false,
+        "esModuleInterop": false,
+        "allowSyntheticDefaultImports": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "module": "esnext",
+        "moduleResolution": "Node",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": true,
+        "jsx": "react-jsx", 
+        "experimentalDecorators": true, // 开启装饰器使用
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["src/*"]
+        }
+    },
+    "include": [
+        "src/**/*",
+        "img.d.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "lib",
+        "es",
+        "dist",
+        "typings",
+        "**/__test__",
+        "test",
+        "docs",
+        "tests"
+    ]
+}
