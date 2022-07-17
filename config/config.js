@@ -18,7 +18,7 @@ const config = {
         venders: ['react', 'react-dom'],
         // 把业务代码和第三方包的代码，分离开来
         app: {
-            import: resolve('src/main.js'),
+            import: resolve('src/main'),
             dependOn: 'venders',
         }
     },

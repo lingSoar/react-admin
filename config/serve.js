@@ -13,7 +13,7 @@ module.exports = {
      * 本地服务要有静态资源目录，默认就是public
      */
     devServer: {
-        port: 8099,
+        port: 8999,
         hot: true, // 支持本地服务下的代码热更新
         compress: false, // gzip压缩，开发环境不开启，提升热更新速度
         open: true, // 在开发环境中，执行后自动打开默认浏览器

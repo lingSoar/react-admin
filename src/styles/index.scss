@@ -1,0 +1,122 @@
+/*清除默认边距*/
+body,
+html,
+span,
+img,
+input,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+dl,
+dt,
+dd,
+ul,
+li,
+ol,
+a,
+p,
+b,
+strong,
+i,
+em,
+div,
+table,
+tr,
+td,
+th {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body,
+html {
+  height: 100%;
+
+  #root {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+/*去掉无序及有序列表自带的样式*/
+ul,
+ol {
+  list-style: none;
+}
+
+/*去除超链接自带的下划线*/
+a {
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  line-height: 35px;
+  color: #333;
+}
+
+a:hover {
+  color: crimson;
+}
+
+img {
+  display: block;
+  // width: 100%;
+  // height: 100%;
+}
+
+/*取消标题自带的加粗效果*/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+b,
+strong {
+  font-weight: normal;
+}
+
+/*去掉列表自带的边框 以及 输入内容时出现的边框*/
+input {
+  border: none;
+  outline: none;
+}
+
+/*万能清除浮动法*/
+.clear::after {
+  content: '';
+  clear: both;
+  display: block;
+  overflow: hidden;
+  height: 0;
+  visibility: hidden;
+}
+
+/* 取消倾斜 */
+i {
+  font-style: normal;
+}
+
+/* 去除文本域输入内容时出现的边框 */
+textarea {
+  outline: none;
+}
+
+/* 多行文本溢出出现省略号(兼容) */
+.textOverflow1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.textOverflow2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}

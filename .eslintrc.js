@@ -9,24 +9,24 @@
  */
 module.exports = {
     // 一个对Babel解析器的包装，使其能够与 ESLint 兼容
-    parser: "@babel/eslint-parser",
+    parser: '@babel/eslint-parser',
     extends: [
-        "eslint:recommended",
-        "plugin:react/recommended",
-        "plugin:react-hooks/recommended",
-        "plugin:jsx-a11y/recommended",
-        "plugin:import/recommended"
+        'eslint:recommended',
+        'plugin:react/recommended',
+        'plugin:react-hooks/recommended',
+        'plugin:jsx-a11y/recommended',
+        'plugin:import/recommended'
     ],
     plugins: [
-        "react",
-        "react-hooks",
-        "jsx-a11y",
-        "import"
+        'react',
+        'react-hooks',
+        'jsx-a11y',
+        'import'
     ],
     // 配置ESlint 的解析选项
     parserOptions: {
         ecmaVersion: 6, // 支持es6 语法
-        sourceType: "module",
+        sourceType: 'module',
         ecmaFeatures: {
             jsx: true, // 开启对jsx 语法的兼容
         }
@@ -38,13 +38,13 @@ module.exports = {
     },
     /**
      * 定制检测规则，ESlint 检测的三种级别：
-     *  0-"off"：关闭当前这条规则，也就是说这条规则没用了
-     *  1-"warn"：如果代码违法当前规则，只给一个Warning 警告
-     *  2-"error"：如果代码违法当前规则，直接给Error 错误
+     *  0-'off'：关闭当前这条规则，也就是说这条规则没用了
+     *  1-'warn'：如果代码违法当前规则，只给一个Warning 警告
+     *  2-'error'：如果代码违法当前规则，直接给Error 错误
      */
     rules: {
-        "semi": "off",
-        "react/display-name": 0,
-        "import/no-unresolved": 0
+        'semi': 'off',
+        'react/display-name': 0,
+        'import/no-unresolved': 0
     }
 }

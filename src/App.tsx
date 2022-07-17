@@ -1,27 +1,39 @@
-import React from 'react';
-import '@/styles/init.scss'
-import AA from '@/components/AA'
-import img from './assets/logo.png' 
+import React, { useMemo, useEffect } from 'react'
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import usePermission from '@/permission'
+import routes from '@/routes'
 
-export default function App() {
-    const arr: Array<number> = [1, 2, 3, 14, 115]
-    return (
-        <div className='box'>
-            {
-                arr.map((item, index) => {
-                    return (
-                        <div key={index} className='item'>
-                            <div className='b'>
-                                <span>{item}</span>
-                            </div>
-                            <img src={img} alt="" />
-                        </div>
-                    )
+import Login from '@/pages/login'
+import LayoutComponent from '@/components/layout'
 
-                })
-            }
-            <AA />
-            <h1>66666666666666</h1>
-        </div>
-    );
+const App: React.FC = () => {
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
+
+  const { user } = useSelector(store => (store as any)?.user)
+  
+  const asyncRoutes = usePermission()
+  const userRoutes = useMemo(() => ([...routes, ...asyncRoutes]), [asyncRoutes])
+
+  useEffect(() => {
+    if (Object.keys(user).length === 0 && pathname !== '/login') {
+      navigate('/login')
+    }
+  }, [navigate, pathname, user])
+
+  useEffect(() => {
+    if (user.code === 0 && pathname === '/login') {
+      navigate('/')
+    }
+  }, [navigate, pathname, user])
+
+  return (
+    <Routes>
+      <Route path='/*' element={<LayoutComponent routes={userRoutes} />} />
+      <Route path='/login' element={<Login />} />
+    </Routes>
+  )
 }
+
+export default App
