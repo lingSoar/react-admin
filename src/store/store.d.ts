@@ -3,9 +3,9 @@
  */
 
 // dispatch 派发action 的类型定义
-interface IDispatchPayload {
+interface IDispatchPayload<T> {
   type: string
-  payload?: any
+  payload?: T
 }
 
 // 用户登录信息的类型定义

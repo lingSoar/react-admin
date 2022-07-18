@@ -12,3 +12,8 @@ export function getUserInf(key: string) {
 export function removeUserInf(key: string) {
   localStorage.removeItem(key)
 }
+
+// 获取token
+export function getToken(key: string) {
+  return localStorage.getItem(key)
+}
