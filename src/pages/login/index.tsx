@@ -41,72 +41,74 @@ const Login: React.FC = () => {
 
   return (
     <div className={`${baseCls}`}>
-      <Form
-        form={form}
-        name='basic'
-        labelCol={{
-          span: 6,
-        }}
-        wrapperCol={{
-          span: 16,
-        }}
-        initialValues={{
-          remember: true,
-        }}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-        autoComplete='off'
-      >
-        <Form.Item
-          label='Username'
-          name='username'
-          rules={[
-            {
-              required: true,
-              max: 10,
-              message: '用户名最大10位',
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          label='Password'
-          name='password'
-          rules={[
-            {
-              required: true,
-              min: 1,
-              message: '密码最小1位',
-            },
-          ]}
-        >
-          <Input.Password />
-        </Form.Item>
-
-        <Form.Item
-          name='remember'
-          valuePropName='checked'
+      <div className={`${baseCls}-form`}>
+        <Form
+          form={form}
+          name='basic'
+          labelCol={{
+            span: 6,
+          }}
           wrapperCol={{
-            offset: 6,
             span: 16,
           }}
-        >
-          <Checkbox>保存用户</Checkbox>
-        </Form.Item>
-
-        <Form.Item
-          wrapperCol={{
-            offset: 10,
-            span: 16,
+          initialValues={{
+            remember: true,
           }}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
+          autoComplete='off'
         >
-          <Button type='primary' htmlType='submit' >
-            登录
-          </Button>
-        </Form.Item>
-      </Form>
+          <Form.Item
+            label='Username'
+            name='username'
+            rules={[
+              {
+                required: true,
+                max: 10,
+                message: '用户名最大10位',
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label='Password'
+            name='password'
+            rules={[
+              {
+                required: true,
+                min: 1,
+                message: '密码最小1位',
+              },
+            ]}
+          >
+            <Input.Password />
+          </Form.Item>
+
+          <Form.Item
+            name='remember'
+            valuePropName='checked'
+            wrapperCol={{
+              offset: 6,
+              span: 16,
+            }}
+          >
+            <Checkbox>保存用户</Checkbox>
+          </Form.Item>
+
+          <Form.Item
+            wrapperCol={{
+              offset: 10,
+              span: 16,
+            }}
+          >
+            <Button type='primary' htmlType='submit' >
+              登录
+            </Button>
+          </Form.Item>
+        </Form>
+      </div>
     </div>
   )
 }

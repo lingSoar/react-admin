@@ -14,7 +14,7 @@ const Home: React.FC = () => {
     dispatch(changeUserInf(user))
     message.info('用户信息改变，重新登陆');
     setTimeout(() => {
-      navigate('/login')
+      navigate('/login', { replace: true })
     }, 10)
   }
 
