@@ -1,4 +1,12 @@
 # ESlint 检测的文件忽略配置
-src/*
-
 # 忽略src/utils 中所有代码的检测 => src/utils/*
+/build
+/dist
+node_modules
+**/node_modules/
+/node_modules
+**/dist
+**/*js
+global.d.ts
+
+

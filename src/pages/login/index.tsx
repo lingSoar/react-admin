@@ -4,12 +4,14 @@ import { Button, Checkbox, Form, Input, message } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUserInf } from '@/store/actions/user'
 import './login.scss'
+// 类名基准
+const baseCls = 'admin-login'
 
 const Login: React.FC = () => {
   const [form] = Form.useForm()
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { user } = useSelector(store => (store as any)?.user)
+  const { user } = useSelector(store => (store as IStore)?.user)
 
   const onFinish = (values: IUser) => {
     const { password, username } = values
@@ -34,13 +36,14 @@ const Login: React.FC = () => {
   useEffect(() => {
     const userInf = user?.roles ? user?.roles[0] : 'admin'
     form.setFieldsValue({ username: userInf, password: userInf })
+    /* eslint-disable-next-line */
   }, [form])
 
   return (
-    <div className='login'>
+    <div className={`${baseCls}`}>
       <Form
         form={form}
-        name="basic"
+        name='basic'
         labelCol={{
           span: 6,
         }}
@@ -52,11 +55,11 @@ const Login: React.FC = () => {
         }}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
-        autoComplete="off"
+        autoComplete='off'
       >
         <Form.Item
-          label="Username"
-          name="username"
+          label='Username'
+          name='username'
           rules={[
             {
               required: true,
@@ -69,8 +72,8 @@ const Login: React.FC = () => {
         </Form.Item>
 
         <Form.Item
-          label="Password"
-          name="password"
+          label='Password'
+          name='password'
           rules={[
             {
               required: true,
@@ -83,8 +86,8 @@ const Login: React.FC = () => {
         </Form.Item>
 
         <Form.Item
-          name="remember"
-          valuePropName="checked"
+          name='remember'
+          valuePropName='checked'
           wrapperCol={{
             offset: 6,
             span: 16,
@@ -99,7 +102,7 @@ const Login: React.FC = () => {
             span: 16,
           }}
         >
-          <Button type="primary" htmlType="submit" >
+          <Button type='primary' htmlType='submit' >
             登录
           </Button>
         </Form.Item>

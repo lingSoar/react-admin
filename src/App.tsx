@@ -11,8 +11,8 @@ const App: React.FC = () => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
 
-  const { user } = useSelector(store => (store as any)?.user)
-  
+  const { user } = useSelector(store => (store as IStore)?.user)
+
   const asyncRoutes = usePermission()
   const userRoutes = useMemo(() => ([...routes, ...asyncRoutes]), [asyncRoutes])
 

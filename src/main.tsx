@@ -8,9 +8,12 @@ import 'antd/dist/antd.css'
 import '@/styles/index.scss'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <HashRouter>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </HashRouter>
+  <React.Fragment>
+    <HashRouter>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </HashRouter>
+  </React.Fragment>
+
 )

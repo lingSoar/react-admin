@@ -13,3 +13,8 @@ interface IUser {
   username: string
   password: string
 }
+
+// store 的类型定义
+interface IStore {
+  user: userState
+}

@@ -10,80 +10,83 @@ import screenfull from 'screenfull'
 import { IRoute } from '@/route'
 import './layout.scss'
 const { Header, Sider, Content } = Layout
+// 类名基准
+const baseCls = 'admin-layout'
 
 const LayoutComponent: React.FC<any> = ({ routes }) => {
   const navigate = useNavigate()
   const element = useRoutes(routes)
   const { pathname, state } = useLocation()
-  
-  const { roles } = useSelector(store => (store as any)?.user)
+
+  const { roles } = useSelector(store => (store as IStore)?.user)
   const [selectedKey, openKey] = useMenu(routes)
-  
+
   const [title, setTitle] = useState<string>('首页')
   const [isFull, setIsFull] = useState<boolean>(true)
   const [collapsed, setCollapsed] = useState<boolean>(false);
 
   // 依据路由处理侧边的菜单栏
-  const menu = useMemo(() => routes?.filter((item: IRoute) => item.hasOwnProperty('name')).map((item: IRoute) => {
-      let ele = null
-      if (!item.children) {
-          ele = { label: item.name, key: item.key, icon: item.icon }
-      } else {
-          ele = {
-              label: item.name,
-              key: item.key,
-              icon: item.icon,
-              children: item.children.map(childItem => ({ label: childItem.name, key: childItem.key, icon: childItem?.icon })),
-          }
+  const menu = useMemo(() => routes?.filter((item: IRoute) => Object.prototype.hasOwnProperty.call(item, 'name')).map((item: IRoute) => {
+    let ele = null
+    if (!item.children) {
+      ele = { label: item.name, key: item.key, icon: item.icon }
+    } else {
+      ele = {
+        label: item.name,
+        key: item.key,
+        icon: item.icon,
+        children: item.children.map(childItem => ({ label: childItem.name, key: childItem.key, icon: childItem?.icon })),
       }
-      return ele
+    }
+    return ele
   }), [routes])
 
   // 路由跳转
   const changeRoute = (menuItem: any) => {
-      const { domEvent: { target }, key } = menuItem
-      const title = target.innerText
+    const { domEvent: { target }, key } = menuItem
+    const title = target.innerText
 
-      if (key) {
-          navigate(key, {
-              replace: false,
-              state: {
-                  name: title
-              }
-          })
-      }
+    if (key) {
+      navigate(key, {
+        replace: false,
+        state: {
+          name: title
+        }
+      })
+    }
   }
 
   // 侧边菜单标题显示
   useEffect(() => {
-      (state as any)?.name && setTitle((state as any)?.name)
+    (state as any)?.name && setTitle((state as any)?.name)
 
-      switch (pathname) {
-          case '/study':
-              navigate('/study/cnode')
-              break;
-          case '/charts':
-              navigate('/charts/broCharts')
-              break;
-          default:
-              break;
-      }
+    switch (pathname) {
+      case '/study':
+        navigate('/study/cnode')
+        break;
+      case '/charts':
+        navigate('/charts/broCharts')
+        break;
+      default:
+        break;
+    }
+    /* eslint-disable-next-line */
   }, [navigate, pathname, (state as any)?.name])
 
   // 全屏操作
   const fullscreen = () => {
-      if (screenfull.isEnabled) {
-          isFull ? screenfull.request() : screenfull.exit()
-          setIsFull(!isFull)
-      }
+    if (screenfull.isEnabled) {
+      isFull ? screenfull.request() : screenfull.exit()
+      setIsFull(!isFull)
+    }
   }
 
 
   return (
-    <Layout style={{ width: '100%', height: '100%' }}>
+    <Layout className={`${baseCls}`}>
       <Sider trigger={null} collapsible collapsed={collapsed}>
-        <div className="logo" >
-          {!collapsed ? `欢迎 ${roles[0]} 用户` : roles[0]}
+        <div className={`${baseCls}-logo`} >
+          {!collapsed ? `欢迎 ${roles[0] ? roles[0] : ''} 用户` : roles[0]}
         </div>
         <Menu
           theme="dark"
@@ -95,21 +98,16 @@ const LayoutComponent: React.FC<any> = ({ routes }) => {
         />
       </Sider>
 
-      <Layout className="site-layout">
-        <Header
-          className="site-layout-background"
-          style={{
-            padding: 0,
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <div style={{ paddingLeft: '20px' }}>
+      <Layout className={`${baseCls}-sitelayout`}>
+        <Header className={`${baseCls}-sitelayout-header`}>
+          <div className={`${baseCls}-sitelayout-header-content`}>
+            <div className={`${baseCls}-sitelayout-header-content-folaicon`}>
               {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
                 className: 'trigger',
                 onClick: () => setCollapsed(!collapsed),
               })}
             </div>
-            <h1 style={{ fontSize: '35px', padding: '0 50px' }}>{title ? title : '访问页面不存在'}</h1>
+            <h1 className={`${baseCls}-sitelayout-header-content-title`}>{title ? title : '访问页面不存在'}</h1>
             <Button type='primary'
               style={{
                 height: '30px',
@@ -119,18 +117,11 @@ const LayoutComponent: React.FC<any> = ({ routes }) => {
               }}
               onClick={fullscreen}
             >网页全屏</Button>
+
           </div>
         </Header>
 
-        <Content
-          className="site-layout-background"
-          style={{
-            margin: '24px 16px',
-            padding: 24,
-            minHeight: 280,
-            overflow: 'auto'
-          }}
-        >
+        <Content className={`${baseCls}-sitelayout-content`}>
           {element}
         </Content>
       </Layout>

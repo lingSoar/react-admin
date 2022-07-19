@@ -9,19 +9,21 @@
  */
 module.exports = {
     // 一个对Babel解析器的包装，使其能够与 ESLint 兼容
-    parser: '@babel/eslint-parser',
+    parser: '@typescript-eslint/parser',
     extends: [
         'eslint:recommended',
         'plugin:react/recommended',
         'plugin:react-hooks/recommended',
         'plugin:jsx-a11y/recommended',
-        'plugin:import/recommended'
+        'plugin:import/recommended',
+        'plugin:@typescript-eslint/recommended'
     ],
     plugins: [
         'react',
         'react-hooks',
         'jsx-a11y',
-        'import'
+        'import',
+        '@typescript-eslint'
     ],
     // 配置ESlint 的解析选项
     parserOptions: {
@@ -45,6 +47,7 @@ module.exports = {
     rules: {
         'semi': 'off',
         'react/display-name': 0,
-        'import/no-unresolved': 0
+        'import/no-unresolved': 0,
+        '@typescript-eslint/no-explicit-any': 0
     }
 }

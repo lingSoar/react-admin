@@ -1,17 +1,7 @@
-import { Reducer } from 'redux'
+/* eslint-disable-next-line */
 import produce from 'immer'
 import { SET_USERINF, REMOV_USERINF, CHANGE_USERINF } from '../constant'
 import { setUserInf, getUserInf, removeUserInf } from '@/utils/storage/user'
-
-export interface userState {
-  roles: string[],
-  user: {
-    code?: number,
-    roles?: Array<string>,
-    success?: string,
-    error?: string
-  }
-}
 
 const userInf = getUserInf('userInf')
 const initState: userState = {
@@ -19,7 +9,7 @@ const initState: userState = {
   user: userInf || {}
 }
 
-const userReducer: Reducer<userState, IDispatchPayload<any>> = (state = initState, { type, payload }: IDispatchPayload<any>) => {
+const userReducer = (state: userState = initState, { type, payload }: IDispatchPayload<any>) => {
 
   // 使用produce 进行深复制，就可以直接操作了
   return produce(state, cloneState => {
