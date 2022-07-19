@@ -41,14 +41,12 @@ import { IRoute } from '@/route'
 //   [propName: string]: any   // 接收任何多余的字段
 // }
 
-
 const Pie = loadable(() => import('@/pages/charts/pie'))
 const Bar = loadable(() => import('@/pages/charts/bar'))
 const Line = loadable(() => import('@/pages/charts/line'))
 const Home = loadable(() => import('@/pages/home'))
 const NotFound = loadable(() => import('@/pages/notFound'))
 const Practice = loadable(() => import('@/pages/practice'))
-
 
 // 权限路由
 export const asyncRoutes: Array<IRoute> = [

@@ -1,21 +1,32 @@
+import { Reducer } from 'redux'
 import produce from 'immer'
 import { SET_USERINF, REMOV_USERINF, CHANGE_USERINF } from '../constant'
 import { setUserInf, getUserInf, removeUserInf } from '@/utils/storage/user'
 
+export interface userState {
+  roles: string[],
+  user: {
+    code?: number,
+    roles?: Array<string>,
+    success?: string,
+    error?: string
+  }
+}
+
 const userInf = getUserInf('userInf')
-const initState = {
+const initState: userState = {
   roles: userInf?.roles || ['admin'],
   user: userInf || {}
 }
 
-export default function user(state = initState, { type, payload }: IDispatchPayload) {
+const userReducer: Reducer<userState, IDispatchPayload<any>> = (state = initState, { type, payload }: IDispatchPayload<any>) => {
 
   // 使用produce 进行深复制，就可以直接操作了
   return produce(state, cloneState => {
     switch (type) {
       case SET_USERINF:
         cloneState.user = payload
-        cloneState.roles = payload?.roles        
+        cloneState.roles = payload?.roles
         setUserInf(payload)
         break;
       case REMOV_USERINF:
@@ -24,10 +35,12 @@ export default function user(state = initState, { type, payload }: IDispatchPayl
         removeUserInf(payload)
         break;
       case CHANGE_USERINF:
-        cloneState.user = {...cloneState.user, roles: [payload]}
+        cloneState.user = { ...cloneState.user, roles: [payload] }
         break;
       default:
         break;
     }
   })
 }
+
+export default userReducer

@@ -1,4 +1,13 @@
-import axios from 'axios'
+import axios, { AxiosRequestConfig, AxiosError, AxiosResponse } from 'axios'
+import { message, Modal } from 'antd'
+import { getToken } from '@/utils/storage/user'
+import AdminConfig from '@/config'
+interface ResponseData<T> {
+  code: number,
+  data: T,
+  msg: string,
+  status: number,
+}
 
 const baseURL = 'http://localhost:3000'
 const service = axios.create({
@@ -8,23 +17,55 @@ const service = axios.create({
 
 // 请求拦截
 service.interceptors.request.use(
-  config => {
+  (config: AxiosRequestConfig) => {
+    const token = getToken('token')
+
+    // 获取用户token，用于校验
+    if (token) {
+      (config as any).headers.token = token;
+    }
     return config
   },
-  error => {
-    return Promise.reject(error)
-  }
+  (error: AxiosError) => Promise.reject(error)
 )
 
 // 响应拦截
 service.interceptors.response.use(
-  response => {
-    if (response.status === 200 && response.data) {
-      return response.data
+  (response: AxiosResponse<ResponseData<any>>) => {
+    if (!response.data) {
+      return Promise.resolve(response);
     }
-    return response
+
+    // 登录已过期或者未登录
+    if (response.data.code === AdminConfig.LOGIN_EXPIRE) {
+      Modal.confirm({
+        title: '系统提示',
+        content: response.data.msg,
+        okText: '重新登录',
+        onOk() {
+          // store.dispatch(clearSideBarRoutes());
+          // store.dispatch(logout());
+          window.location.href = `${
+            window.location.origin
+          }/login?redirectURL=${encodeURIComponent(window.location.href)}`;
+        },
+        onCancel() {},
+      });
+
+      return Promise.reject(new Error(response.data.msg));
+    }
+
+    // 请求成功时
+    if (response.data.code === AdminConfig.SUCCESS_CODE && response.data) {
+      return response.data as any
+    }
+
+    // 请求成功，状态不为成功时
+    message.error(response.data.msg);
+    return Promise.reject(new Error(response.data.msg));
   },
-  error => {
+  (error: AxiosError) => {
+    message.error(error.message)
     return Promise.reject(error)
   }
 )
