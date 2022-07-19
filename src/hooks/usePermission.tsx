@@ -20,7 +20,6 @@ export default function usePermission(roles: Array<string> = [], element: () => 
 
   useEffect(() => {
     unDisable()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPermission])
 
   if (isShow) {

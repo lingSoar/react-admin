@@ -1,4 +1,4 @@
-import fetch from '.';
+// import fetch from '.';
 
 interface ILogin {
   username: string
@@ -27,7 +27,7 @@ function mockApi(url: string, payload: ILogin) {
     case '/login':
       return login(payload)
     default:
-      break;
+      return
   }
 
 }

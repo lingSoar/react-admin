@@ -47,7 +47,6 @@ const Bar = loadable(() => import('@/pages/charts/bar'))
 const Line = loadable(() => import('@/pages/charts/line'))
 const Home = loadable(() => import('@/pages/home'))
 const NotFound = loadable(() => import('@/pages/notFound'))
-const Login = loadable(() => import('@/pages/login'))
 const Practice = loadable(() => import('@/pages/practice'))
 
 
