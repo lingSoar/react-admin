@@ -1,13 +1,21 @@
 $prefixCls: admin-login;
 
 .#{$prefixCls} {
-  width: 500px;
-  border: 1px solid #333;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -ms-transform: translate(-50%, -80%);
-  transform: translate(-50%, -80%);
-  box-sizing: border-box;
-  padding-top: 30px;
+  width: 100%;
+  height: 100%;
+  background: url('@/assets/bgImg.jpeg') no-repeat center;
+  background-size: 100%;
+
+  &-form {
+    width: 500px;
+    background: #fff;
+    border: 1px solid #DDFFFF;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -70%);
+    transform: translate(-50%, -70%);
+    box-sizing: border-box;
+    padding-top: 50px;
+  }
 }
