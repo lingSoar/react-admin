@@ -11,4 +11,5 @@ const fetch = (url: string, payload: any = {}, methos: string = 'GET') => {
     })
   })
 }
+
 export default fetch
