@@ -15,5 +15,4 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       </Provider>
     </HashRouter>
   </React.Fragment>
-
 )
