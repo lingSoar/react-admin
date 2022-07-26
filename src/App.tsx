@@ -6,9 +6,6 @@ import routes from '@/routes'
 
 import Login from '@/pages/login'
 import LayoutComponent from '@/components/layout'
-// const path = require('path')
-// console.log('path', path);
-
 
 const App: React.FC = () => {
   const navigate = useNavigate()
