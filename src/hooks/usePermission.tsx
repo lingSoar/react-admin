@@ -1,7 +1,10 @@
+/**
+ * @usePermission 元素级别的权限控制
+ */
+
 import React, { useRef, useEffect, useMemo } from "react";
 import { useSelector } from "react-redux";
 
-// 元素级别的权限控制
 export default function usePermission(roles: Array<string> = [], element: () => React.ReactNode, isShow: boolean | undefined = true,) {
   const containerRef = useRef(null)
   const { roles: userRole } = useSelector(store => (store as IStore)?.user)

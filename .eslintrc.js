@@ -48,6 +48,8 @@ module.exports = {
         'semi': 'off',
         'react/display-name': 0,
         'import/no-unresolved': 0,
-        '@typescript-eslint/no-explicit-any': 0
+        '@typescript-eslint/no-explicit-any': 0,
+        'jsx-a11y/click-events-have-key-events': 0,
+        'jsx-a11y/no-noninteractive-element-interactions': 0,
     }
 }
