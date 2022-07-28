@@ -1,5 +1,5 @@
 /**
- * 深拷贝
+ * @deepClone 深拷贝
  */
 const deepClone = (target: any, hashMap: WeakMap<any, any> = new WeakMap()) => {
   // 自定义封装一个forEach 替代for in 遍历

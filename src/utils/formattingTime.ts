@@ -1,5 +1,5 @@
 /**
- * 1、粗略计算时间格式
+ * @roughFormattingTime 粗略计算时间格式
  */
 const roughFormattingTime = (time: number | string) => {
   // 距离现在的时间戳（秒）
@@ -17,7 +17,7 @@ const roughFormattingTime = (time: number | string) => {
 
 
 /**
- * 2、精确计算时间格式
+ * @carefulFormattingTime 精确计算时间格式
  */
 const carefulFormattingTime = (time: number | string) => {
   // 距离现在的时间戳（秒）
