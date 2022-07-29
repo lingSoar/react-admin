@@ -9,10 +9,8 @@ interface IProps {
   schedule: number | string,
   // 刻度份数
   copies?: number | string,
-  // 进度圈宽度
-  width?: number | string,
-  // 进度圈高度
-  height?: number | string,
+  // 进度圈大小(宽度和高度)
+  size?: number | string,
   // 外层刻度线的背景颜色
   reticuleBgColor?: string,
   // 外层刻度线的遮罩层背景颜色
@@ -29,15 +27,19 @@ interface IProps {
 }
 
 const CircularScale: React.FC<IProps> = (props) => {
-  const { copies, width, height, reticuleBgColor, children, maskBgColor, contentBgColor, stroke, schedule } = props
+  const { copies, size, reticuleBgColor, children, maskBgColor, contentBgColor, stroke, schedule } = props
+
   const reticuleArr = useMemo(() => (new Array(Number(copies) || 36)).fill(1), [copies])
 
-  const cx = useMemo(() => (Number(width) || 200) * 1.05 / 2, [width])
-  const cy = useMemo(() => (Number(height) || 200) * 1.05 / 2, [height])
-  const r = useMemo(() => (Number(width) || 200) / 2, [width])
-  const strokeWidth = useMemo(() => (Number(width) || 200) / 20, [width])
-  const rotate = useMemo(() => `-90 ${(Number(width) || 200) * 1.05 / 2} ${(Number(width) || 200) * 1.05 / 2}`, [width])
-  const strokeDasharray = useMemo(() => Math.PI * (Number(width) || 200), [width])
+  const options = useMemo(() => ({
+    cx: (Number(size) || 200) * 1.05 / 2,
+    cy: (Number(size) || 200) * 1.05 / 2,
+    r: (Number(size) || 200) / 2,
+    strokeWidth: (Number(size) || 200) / 20,
+    rotate: `-90 ${(Number(size) || 200) * 1.05 / 2} ${(Number(size) || 200) * 1.05 / 2}`,
+  }), [size])
+  const strokeDasharray = useMemo(() => Math.PI * (Number(size) || 200), [size])
+
   const strokeDashoffset = useMemo(() => strokeDasharray - Number(schedule) / 100 * strokeDasharray, [schedule, strokeDasharray])
   const deg = useMemo(() => 360 / (Number(copies) || 36), [copies])
 
@@ -46,8 +48,8 @@ const CircularScale: React.FC<IProps> = (props) => {
       <div
         className='circularScale'
         style={{
-          width: Number(width) || 200,
-          height: Number(height) || 200,
+          width: Number(size) || 200,
+          height: Number(size) || 200,
         }}>
         <div
           className='content'
@@ -68,13 +70,13 @@ const CircularScale: React.FC<IProps> = (props) => {
                strokeLinecap：stroke-linecap 作为一个展现属性，制定了在开放子路径被设置描边的情况下，用于开放自路径两端的形状。
            */}
           <circle
-            cx={cx}
-            cy={cy}
-            r={r}
+            cx={options.cx}
+            cy={options.cy}
+            r={options.r}
             fill='none'
-            strokeWidth={strokeWidth}
+            strokeWidth={options.strokeWidth}
             stroke={stroke || 'rgba(91,186,250,0.6)'}
-            transform={`rotate(${rotate})`}
+            transform={`rotate(${options.rotate})`}
             strokeDasharray={strokeDasharray}
             strokeDashoffset={strokeDashoffset}
             strokeLinecap='round'
