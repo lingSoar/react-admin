@@ -7,34 +7,32 @@
   transform: translate(-50%, -50%);
 }
 
-@mixin mask() {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  background-color: rgba(0, 0, 0, 0.3);
-  border-radius: 50%;
-  z-index: 99;
-}
-
 .circularScale {
   position: relative;
-  // border: 2px solid #0997F7;
   border-radius: 50%;
 
   .content {
+    @include orientation;
     width: 90%;
     height: 90%;
-    background-color: pink;
     display: flex;
     justify-content: center;
     align-items: center;
-    @include orientation;
-    z-index: 999;
+    z-index: 199;
   }
 
-  .circularScale-maskA,
-  .circularScale-maskB {
-    @include mask;
+  .circularScale-svg {
+    @include orientation;
+    width: 105%;
+    height: 105%;
+    border-radius: 0%;
+    z-index: 299;
+  }
+
+  .circularScale-mask{
+    @include orientation;
+    width: 100%;
+    height: 100%;
   }
 
   .circularScale-reticule {
@@ -42,22 +40,22 @@
     height: 100%;
     @include orientation;
 
-    li {
+    span {
       height: 100%;
       width: 1px;
-      background-color: red;
       position: absolute;
       left: 50%;
       -ms-transform: translateX(-50%);
       transform: translateX(-50%);
+      display: block;
     }
   }
 
   .circularScale-reticule-mask {
-    width: 95%;
-    height: 95%;
-    background-color: #fff;
-    z-index: 9;
     @include orientation;
+    width: 92%;
+    height: 92%;
+    background-color: #fff;
+    z-index: 99;
   }
 }

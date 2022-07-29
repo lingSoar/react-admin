@@ -2,7 +2,9 @@ import React from 'react'
 import useLazyImgs from '@/hooks/useLazyImgs'
 // import download from '@/utils/download'
 
-const Practice: React.FC = () => {
+const Practice: React.FC = (props) => {
+  console.log('props', props)
+  
   const imgs: any[] = [
     {
       id: 1,
