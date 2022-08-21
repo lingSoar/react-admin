@@ -1,15 +1,19 @@
-import React, { useState, useEffect, useRef } from 'react'
-import CircularScale from '@/components/circular-scale'
+import React, { useState, useEffect, useRef, useMemo } from 'react'
+import CircularScale from '@/components/progress/circular'
+import Carousel from '@/components/carousel'
+
 const User: React.FC = () => {
   const [schedule, setSchedule] = useState<number | string>(0)
   const timer = useRef<any>(null)
+
+  const [data] = useState([1, 2, 3, 4])
 
 
   useEffect(() => {
     timer.current && clearTimeout(timer.current)
 
     timer.current = setTimeout(() => {
-      schedule >= 100 ? setSchedule(0) : setSchedule(i => (Number(i) + .3).toFixed(2))
+      schedule >= 100 ? setSchedule(0) : setSchedule(i => (Number(i) + 1).toFixed(2))
     }, 100)
 
     return () => {
@@ -19,11 +23,14 @@ const User: React.FC = () => {
 
   const add = () => {
     schedule >= 100 && setSchedule(0)
-    setSchedule(i => (Number(i) + .3).toFixed(2))
+    setSchedule(i => (Number(i) + 1).toFixed(2))
   }
 
+  const a = useMemo(() => <Carousel data={[1, 2, 3, 4]} />, [])
   return (
     <>
+      {/* {a} */}
+      <Carousel data={data} />
       <div>User</div>
       <CircularScale
         schedule={schedule}
@@ -40,6 +47,8 @@ const User: React.FC = () => {
         </div>
       </CircularScale>
       <button onClick={add}>{schedule}</button>
+
+
     </>
   )
 }

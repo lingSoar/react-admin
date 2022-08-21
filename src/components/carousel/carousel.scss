@@ -1,0 +1,21 @@
+$prefixCls: admin-carousel;
+
+.#{$prefixCls} {
+  width: 300px;
+  overflow: hidden;
+
+  &-content {
+    display: flex;
+
+    &-item {
+
+      width: 300px;
+
+      img {
+        display: block;
+        width: 300px;
+        height: auto;
+      }
+    }
+  }
+}

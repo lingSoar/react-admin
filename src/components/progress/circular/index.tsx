@@ -2,23 +2,25 @@
  * @CircularScale 定制化的进度圈组件
  */
 import React, { useMemo } from 'react'
-import './index.scss'
+import './circular.scss'
+
+const baseCls = 'admin-circular'
 
 interface IProps {
-  // 进度，百分比
+  /** 进度，百分比 */
   schedule: number | string,
-  // 刻度份数
+  /** 刻度份数 */
   copies?: number | string,
-  // 进度圈大小(宽度和高度)
+  /** 进度圈大小(宽度和高度) */
   size?: number | string,
-  // 外层刻度线的背景颜色
+  /** 外层刻度线的背景颜色 */
   reticuleBgColor?: string,
-  // 外层刻度线的遮罩层背景颜色
+  /** 外层刻度线的遮罩层背景颜色 */
   maskBgColor?: string,
-  // 进度圈颜色
+  /** 进度圈颜色 */
   stroke?: string,
   children?: JSX.Element | never[],
-  // 内容区背景色，渐变色
+  /** 内容区背景色，渐变色 */
   contentBgColor?: {
     direction?: string
     startColor?: string
@@ -46,17 +48,17 @@ const CircularScale: React.FC<IProps> = (props) => {
   return (
     <>
       <div
-        className='circularScale'
+        className={`${baseCls}`}
         style={{
           width: Number(size) || 200,
           height: Number(size) || 200,
         }}>
         <div
-          className='content'
+          className={`${baseCls}-content`}
           style={{ backgroundImage: `linear-gradient(${contentBgColor?.direction || '0deg'},${contentBgColor?.endColor || '#99D6FF'},${contentBgColor?.startColor || '#11A0FF'})` }}>
           {children || <h1>{schedule}%</h1>}
         </div>
-        <svg className='circularScale-svg'>
+        <svg className={`${baseCls}-svg`}>
           {/* 
                circle：<circle> SVG 元素，是一个 SVG 的基本形状，用来创建圆，基于一个圆心和一个半径
                cx：cx 属性定义一个中心点的 x 轴坐标
@@ -82,13 +84,12 @@ const CircularScale: React.FC<IProps> = (props) => {
             strokeLinecap='round'
           />
         </svg>
-        <div className='circularScale-mask' style={{ backgroundColor: `${maskBgColor || 'rgba(176,220,249,0.6)'}` }} />
-        <div className='circularScale-reticule'>
+        <div className={`${baseCls}-mask`} style={{ backgroundColor: `${maskBgColor || 'rgba(176,220,249,0.6)'}` }} />
+        <div className={`${baseCls}-reticule`}>
           {
             reticuleArr.map((_, index) => (
               <span
                 key={index}
-                className='reticule'
                 style={{
                   transform: `rotate(${(index + 1) * deg}deg)`,
                   backgroundColor: `${reticuleBgColor || '#219DEF'}`
@@ -97,10 +98,10 @@ const CircularScale: React.FC<IProps> = (props) => {
             ))
           }
         </div>
-        <div className='circularScale-reticule-mask' />
+        <div className={`${baseCls}-reticule-mask`} />
       </div>
     </>
   )
 }
 
-export default CircularScale
+export default React.memo(CircularScale, (prevProps, nextProps) => Object.is(prevProps, nextProps))
