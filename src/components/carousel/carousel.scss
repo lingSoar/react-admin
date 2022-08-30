@@ -1,21 +1,102 @@
 $prefixCls: admin-carousel;
 
+@mixin slideStyle() {
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+
+  width: 36px;
+  height: 36px;
+  border: none;
+  outline: none;
+  border-radius: 50%;
+  background-color: rgba(31, 45, 61, .23);
+}
+
+@mixin slideAfter() {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  font-size: 18px;
+  color: rgba($color: #fff, $alpha: 0.7);
+}
+
+$width: 500px;
+
 .#{$prefixCls} {
-  width: 300px;
+  width: $width;
   overflow: hidden;
+  position: relative;
 
   &-content {
     display: flex;
 
     &-item {
 
-      width: 300px;
+      width: $width;
 
       img {
         display: block;
-        width: 300px;
+        width: $width;
         height: auto;
       }
     }
   }
+
+  &-points {
+    height: 10px;
+    width: 100%;
+    position: absolute;
+    bottom: 15%;
+    left: 0;
+    display: flex;
+    justify-content: center;
+
+    &-box {
+      display: flex;
+      z-index: 9;
+
+      .#{$prefixCls}-point {
+        display: block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: red;
+        margin: 0 5px;
+        transition: all 0.1s;
+      }
+    }
+  }
+
+  &-preSlide {
+    @include slideStyle;
+    left: 0;
+  }
+
+  &-nextSlide {
+    @include slideStyle;
+    right: 0;
+  }
+
+  &-preSlide::after {
+    content: '<';
+    @include slideAfter;
+  }
+
+  &-nextSlide::after {
+    content: '>';
+    @include slideAfter;
+  }
+
+  &-preSlide:hover {
+    background-color: rgba(31, 45, 61, .33);
+  }
+
+  &-nextSlide:hover {
+    background-color: rgba(31, 45, 61, .33);
+  }
+
 }

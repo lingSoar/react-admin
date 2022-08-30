@@ -1,10 +1,10 @@
-import React, { useState, useRef, useEffect, useReducer, useCallback } from 'react'
+import React, { useState, useRef, useEffect, useReducer, useCallback, useMemo } from 'react'
 import './carousel.scss'
 
 const baseCls = 'admin-carousel'
 
 interface IProps {
-  /** 轮播时间 */
+  /** 轮播内容 */
   data: any[]
   /** 轮播时间 */
   intTime?: number
@@ -19,8 +19,12 @@ type IReducerPayload = {
 }
 
 const Carousel: React.FC<IProps> = (props) => {
-  const { data = [], intTime = 3000 } = props
+  const { data = [], intTime = 3000, dotPosition } = props
   const [isnext, setIsnext] = useState(true)
+  const [isShow, setIsShow] = useState(false)
+
+  const ref = useRef(null)
+  const timer = useRef<any>(null)
 
   const [state, dispatch] = useReducer((preState: any, action: { type?: IReducerType; payload?: IReducerPayload }) => {
     const { currentIndex } = preState
@@ -37,10 +41,7 @@ const Carousel: React.FC<IProps> = (props) => {
         return { ...preState }
     }
   }, { currentIndex: 1, animation: 'none' } as IReducerPayload)
-
   const { currentIndex, animation } = state
-  const ref = useRef(null)
-  const timer = useRef<any>(null)
 
   // 初始化操作，复制第一个元素到最后，复制最后一个元素到最前头，解决轮播切换首尾的的不连贯
   const init = useCallback(() => {
@@ -80,20 +81,36 @@ const Carousel: React.FC<IProps> = (props) => {
     timer.current && clearInterval(timer.current)
     const time = (currentIndex > data.length || currentIndex === 0) ? intTime / 10 : intTime
 
-    // timer.current = setInterval(isnext ? nextSlide : preSlide, time)
+    timer.current = setInterval(isnext ? nextSlide : preSlide, time)
     return () => {
       clearInterval(timer.current)
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state, isnext])
-  console.log(11111);
 
+  const position = useMemo(() => {
+    switch (dotPosition) {
+      case 'top':
+        return {top: 20, }
+      case 'bottom':
+        return {bottom: 20}
+      case 'left':
+        return {left: 20}
+      case 'right':
+        return {}
+      default:
+        return {}
+    }
+  }, [dotPosition])
 
   return (
-    <>
-      <div className={`${baseCls}`}>
-        {currentIndex}
+    <React.Fragment>
+      <div
+        className={`${baseCls}`}
+        onMouseEnter={() => setIsShow(true)}
+        onMouseLeave={() => setIsShow(false)}
+      >
         <div
           className={`${baseCls}-content`}
           style={{
@@ -105,22 +122,40 @@ const Carousel: React.FC<IProps> = (props) => {
           {data.map((i, index) => (
             <div key={index} className={`${baseCls}-content-item`}>
               <img src={require(`./images/img${index + 1}.jpg`)} alt='' />
-              <h1>{i}</h1>
             </div>
           ))}
         </div>
+
+        <div
+          className={`${baseCls}-points`}
+          style={{...position}}
+        >
+          <div className={`${baseCls}-points-box`}>
+            {data.map((i, index) => (
+              <i
+                key={index}
+                className={`${baseCls}-point`}
+                style={{ backgroundColor: currentIndex === index + 1 ? 'red' : '#fff' }}
+                onClick={() => dispatch({ type: 'normal', payload: { currentIndex: index + 1 } })}
+              />
+            ))}
+          </div>
+        </div>
+
+        <span
+          className={`${baseCls}-preSlide`}
+          onClick={preSlide}
+          style={{ display: isShow ? 'block' : 'none' }}
+        />
+        <span
+          className={`${baseCls}-nextSlide`}
+          onClick={nextSlide}
+          style={{ display: isShow ? 'block' : 'none' }}
+        />
       </div>
 
-      <button onClick={preSlide}>{'<'}</button>
-      <button onClick={nextSlide}>{'>'}</button>
-    </>
+    </React.Fragment>
   )
 }
 
-export default React.memo(Carousel, (prevProps, nextProps) => {
-
-  // console.log(prevProps, nextProps)
-
-  return Object.is(prevProps, nextProps)
-}
-) 
+export default React.memo(Carousel) 

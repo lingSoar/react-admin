@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import CircularScale from '@/components/progress/circular'
 import Carousel from '@/components/carousel'
 
@@ -26,11 +26,23 @@ const User: React.FC = () => {
     setSchedule(i => (Number(i) + 1).toFixed(2))
   }
 
-  const a = useMemo(() => <Carousel data={[1, 2, 3, 4]} />, [])
+  const [val, setVal] = useState<'top' | 'bottom' | 'left' | 'right'>('bottom')
+
+  const handleChange = (e: any) => {
+    setVal(e.target.value)
+  }
+
+
   return (
     <>
-      {/* {a} */}
-      <Carousel data={data} />
+      <select name='a' title='b' value={val} onChange={handleChange}>
+        <option value="top">top</option>
+        <option value="bottom">bottom</option>
+        <option value="left">left</option>
+        <option value="right">right</option>
+      </select>
+      {val}
+      <Carousel data={data} dotPosition={val} />
       <div>User</div>
       <CircularScale
         schedule={schedule}

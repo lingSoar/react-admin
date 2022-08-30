@@ -104,4 +104,4 @@ const CircularScale: React.FC<IProps> = (props) => {
   )
 }
 
-export default React.memo(CircularScale, (prevProps, nextProps) => Object.is(prevProps, nextProps))
+export default React.memo(CircularScale)
