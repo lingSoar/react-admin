@@ -11,7 +11,7 @@ interface IImages {
   [propName: string]: any
 }
 
-export default function useLazyImgs(imgs: IImages[], imgsStyle?: Record<string, string>) {
+export default function useLazyImgs(imgs: IImages[], imgsStyle?: React.CSSProperties) {
   const allTarget = useMemo(() => {
     const refs: HTMLImageElement[] = []
     const images: JSX.Element[] = []
@@ -37,8 +37,8 @@ export default function useLazyImgs(imgs: IImages[], imgsStyle?: Record<string, 
     return new IntersectionObserver(entries => {
       entries.forEach(item => {
         if (item.isIntersecting) {
-          const img = item.target as any
-          img.src = img.dataset.src
+          const img = item.target as HTMLImageElement
+          img.src = img.dataset.src as string
           io.unobserve(img)
         }
       })

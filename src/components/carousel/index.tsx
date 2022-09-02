@@ -8,7 +8,7 @@ interface IProps {
   intTime?: number
   /** 面板指示点位置，默认bottom */
   dotPosition?: 'top' | 'bottom' | 'left' | 'right'
-  children?: any
+  children: Array<JSX.Element>
 }
 
 type IReducerType = 'normal' | 'next' | 'pre' | undefined
@@ -97,7 +97,7 @@ const Carousel: React.FC<IProps> = (props) => {
   const pointsStyle = useMemo(() => {
     switch (dotPosition) {
       case 'top':
-        return { width: '100%', height: 10, top: 20, }
+        return { width: '100%', height: 10, top: 20 }
       case 'bottom':
         return { width: '100%', height: 10, bottom: 20 }
       case 'left':
@@ -107,7 +107,7 @@ const Carousel: React.FC<IProps> = (props) => {
       default:
         return {}
     }
-  }, [dotPosition])
+  }, [dotPosition]) 
 
   return (
     <React.Fragment>
@@ -133,7 +133,7 @@ const Carousel: React.FC<IProps> = (props) => {
             className={`${baseCls}-points-box`}
             style={{ flexDirection: isHorizontal ? 'row' : 'column' }}
           >
-            {children.map((_: any, index: number) => (
+            {children.map((_: JSX.Element, index: number) => (
               <i
                 key={index}
                 className={`${baseCls}-point`}
