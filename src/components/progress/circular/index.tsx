@@ -19,13 +19,13 @@ interface IProps {
   maskBgColor?: string,
   /** 进度圈颜色 */
   stroke?: string,
-  children?: JSX.Element | never[],
   /** 内容区背景色，渐变色 */
   contentBgColor?: {
     direction?: string
     startColor?: string
     endColor?: string
-  }
+  },
+  children?: JSX.Element | never[],
 }
 
 const CircularScale: React.FC<IProps> = (props) => {

@@ -4,12 +4,11 @@ import './carousel.scss'
 const baseCls = 'admin-carousel'
 
 interface IProps {
-  /** 轮播内容 */
-  data: any[]
-  /** 轮播时间 */
+  /** 轮播时间，默认三秒 */
   intTime?: number
-  /** 面板指示点位置 */
+  /** 面板指示点位置，默认bottom */
   dotPosition?: 'top' | 'bottom' | 'left' | 'right'
+  children?: any
 }
 
 type IReducerType = 'normal' | 'next' | 'pre' | undefined
@@ -19,8 +18,8 @@ type IReducerPayload = {
 }
 
 const Carousel: React.FC<IProps> = (props) => {
-  const { data = [], intTime = 3000, dotPosition } = props
-  const [isnext, setIsnext] = useState(true)
+  const { intTime = 3000, dotPosition = 'bottom', children } = props
+  const [isNext, setIsNext] = useState(true)
   const [isShow, setIsShow] = useState(false)
 
   const ref = useRef(null)
@@ -51,54 +50,60 @@ const Carousel: React.FC<IProps> = (props) => {
 
     dom?.appendChild(firstNode as Node);
     dom?.insertBefore(lastNode as Node, dom?.firstElementChild);
+
+    // 解决flex 布局中，主轴宽度不够，子元素不认宽高的问题
+    Array.from(dom.children).forEach((item: any) => item.style.flex = 'none')
   }, [])
 
   useEffect(() => {
     init()
   }, [init])
 
-
+  // 下一面板的处理函数
   const nextSlide = () => {
-    if (currentIndex > data.length) {
+    if (currentIndex > children.length) {
       dispatch({ type: 'normal', payload: { currentIndex: 1, animation: 'none' } })
     } else {
       dispatch({ type: 'next', payload: { animation: '0.3s' } })
     }
   }
 
+  // 上一面板的处理函数
   const preSlide = () => {
     if (currentIndex === 0) {
-      dispatch({ type: 'normal', payload: { currentIndex: data.length, animation: 'none' } })
+      dispatch({ type: 'normal', payload: { currentIndex: children.length, animation: 'none' } })
     } else {
       dispatch({ type: 'pre', payload: { animation: '0.3s' } })
     }
 
-    setIsnext(currentIndex !== 1)
+    setIsNext(currentIndex !== 1)
   }
 
   useEffect(() => {
     const { currentIndex } = state
     timer.current && clearInterval(timer.current)
-    const time = (currentIndex > data.length || currentIndex === 0) ? intTime / 10 : intTime
+    const time = (currentIndex > children.length || currentIndex === 0) ? intTime / 10 : intTime
 
-    timer.current = setInterval(isnext ? nextSlide : preSlide, time)
+    timer.current = setInterval(isNext ? nextSlide : preSlide, time)
     return () => {
       clearInterval(timer.current)
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state, isnext])
+  }, [state, isNext])
 
-  const position = useMemo(() => {
+  // 画板指点是否为水平布局
+  const isHorizontal = useMemo(() => dotPosition === 'top' || dotPosition === 'bottom', [dotPosition])
+
+  const pointsStyle = useMemo(() => {
     switch (dotPosition) {
       case 'top':
-        return {top: 20, }
+        return { width: '100%', height: 10, top: 20, }
       case 'bottom':
-        return {bottom: 20}
+        return { width: '100%', height: 10, bottom: 20 }
       case 'left':
-        return {left: 20}
+        return { width: 10, height: '100%', bottom: 0, left: 20 }
       case 'right':
-        return {}
+        return { width: 10, height: '100%', bottom: 0, right: 20 }
       default:
         return {}
     }
@@ -114,24 +119,21 @@ const Carousel: React.FC<IProps> = (props) => {
         <div
           className={`${baseCls}-content`}
           style={{
-            transform: `translateX(${-currentIndex * 100}%)`,
-            transition: animation
+            transform: isHorizontal ? `translateX(${-currentIndex * 100}%)` : `translateY(${-currentIndex * 100}%)`,
+            transition: animation,
+            flexDirection: isHorizontal ? 'row' : 'column'
           }}
           ref={ref}
         >
-          {data.map((i, index) => (
-            <div key={index} className={`${baseCls}-content-item`}>
-              <img src={require(`./images/img${index + 1}.jpg`)} alt='' />
-            </div>
-          ))}
+          {React.Children.map(children, item => [item])}
         </div>
 
-        <div
-          className={`${baseCls}-points`}
-          style={{...position}}
-        >
-          <div className={`${baseCls}-points-box`}>
-            {data.map((i, index) => (
+        <div className={`${baseCls}-points`} style={{ ...pointsStyle }}>
+          <div
+            className={`${baseCls}-points-box`}
+            style={{ flexDirection: isHorizontal ? 'row' : 'column' }}
+          >
+            {children.map((_: any, index: number) => (
               <i
                 key={index}
                 className={`${baseCls}-point`}
@@ -142,18 +144,9 @@ const Carousel: React.FC<IProps> = (props) => {
           </div>
         </div>
 
-        <span
-          className={`${baseCls}-preSlide`}
-          onClick={preSlide}
-          style={{ display: isShow ? 'block' : 'none' }}
-        />
-        <span
-          className={`${baseCls}-nextSlide`}
-          onClick={nextSlide}
-          style={{ display: isShow ? 'block' : 'none' }}
-        />
+        {isHorizontal && <span className={`${baseCls}-preSlide`} style={{ display: isShow ? 'block' : 'none' }} onClick={preSlide} />}
+        {isHorizontal && <span className={`${baseCls}-nextSlide`} style={{ display: isShow ? 'block' : 'none' }} onClick={nextSlide} />}
       </div>
-
     </React.Fragment>
   )
 }
