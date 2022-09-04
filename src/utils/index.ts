@@ -243,3 +243,13 @@ export const formatDate = (date: number | string | Date, format: TFormat = 'LLLL
       return date
   }
 }
+
+/**
+ * @isType 判断数据类型
+ */
+export const isType = (val: any) => {
+  if (val === null) return 'null'
+  if (typeof val !== 'object') return typeof val
+
+  return Object.prototype.toString.call(val).slice(8, -1).toLocaleLowerCase()
+}
