@@ -8,6 +8,8 @@ interface IProps {
   intTime?: number
   /** 面板指示点位置，默认bottom */
   dotPosition?: 'top' | 'bottom' | 'left' | 'right'
+  /** 面板指示点高亮颜色*/
+  dotColor?: string
   children: Array<JSX.Element>
 }
 
@@ -18,7 +20,7 @@ type IReducerPayload = {
 }
 
 const Carousel: React.FC<IProps> = (props) => {
-  const { intTime = 3000, dotPosition = 'bottom', children } = props
+  const { intTime = 3000, dotPosition = 'bottom', dotColor = '#00CCFF', children } = props
   const [isNext, setIsNext] = useState(true)
   const [isShow, setIsShow] = useState(false)
 
@@ -107,7 +109,7 @@ const Carousel: React.FC<IProps> = (props) => {
       default:
         return {}
     }
-  }, [dotPosition]) 
+  }, [dotPosition])
 
   return (
     <React.Fragment>
@@ -137,7 +139,7 @@ const Carousel: React.FC<IProps> = (props) => {
               <i
                 key={index}
                 className={`${baseCls}-point`}
-                style={{ backgroundColor: currentIndex === index + 1 ? 'red' : '#fff' }}
+                style={{ backgroundColor: currentIndex === index + 1 ? dotColor : '#fff' }}
                 onClick={() => dispatch({ type: 'normal', payload: { currentIndex: index + 1 } })}
               />
             ))}
