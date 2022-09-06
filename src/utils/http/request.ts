@@ -45,11 +45,12 @@ service.interceptors.response.use(
         onOk() {
           // store.dispatch(clearSideBarRoutes());
           // store.dispatch(logout());
-          window.location.href = `${
-            window.location.origin
-          }/login?redirectURL=${encodeURIComponent(window.location.href)}`;
+          window.location.href = `${window.location.origin
+            }/login?redirectURL=${encodeURIComponent(window.location.href)}`;
         },
-        onCancel() {},
+        onCancel() {
+          console.log('取消')
+        },
       });
 
       return Promise.reject(new Error(response.data.msg));

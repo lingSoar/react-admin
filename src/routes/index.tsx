@@ -8,7 +8,8 @@ import {
   PieChartOutlined,
   BarChartOutlined,
   LineChartOutlined,
-  TeamOutlined
+  TeamOutlined,
+  LaptopOutlined
 } from '@ant-design/icons'
 import { IRoute } from '@/route'
 
@@ -19,6 +20,7 @@ const Home = loadable(() => import('@/pages/home'))
 const NotFound = loadable(() => import('@/pages/notFound'))
 const Practice = loadable(() => import('@/pages/practice'))
 const User = loadable(() => import('@/pages/user'))
+const CustomElement = loadable(() => import('@/pages/custom'))
 
 // 权限路由
 export const asyncRoutes: Array<IRoute> = [
@@ -38,6 +40,13 @@ export const asyncRoutes: Array<IRoute> = [
     key: '/user',
     icon: <TeamOutlined />,
     element: <User />,
+  },
+  {
+    path: '/component',
+    name: '自定义组件',
+    key: '/component',
+    icon: <LaptopOutlined />,
+    element: <CustomElement />,
   },
   {
     path: '/charts',

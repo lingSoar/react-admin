@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/named
 import { RouteObject } from 'react-router-dom'
 /**
  * @React 中路由的格式定义

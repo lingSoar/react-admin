@@ -1,10 +1,13 @@
+/**
+ * @useMenu 处理刷新后，侧边菜单的展开和高亮
+ */
+
 import { useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
 import { IRoute } from '@/route'
 
 export default function useMenu(routes: IRoute[]) {
   const { pathname } = useLocation()
-  // 处理刷新后，侧边菜单的展开和高亮
   const keys = useMemo(() => {
     const selectedItem = routes.find(item => pathname.includes(item.key as string))
     let keyArr = [selectedItem?.key, '']
