@@ -1,6 +1,8 @@
 /**
- * @debounce 防抖函数，只执行规定时间内触发的最后一次
- * 所谓防抖，就是指触发事件后，n 秒后才执行函数，如果在n 秒内又触发了事件，则会重新计算函数执行时间。
+ * @description 防抖函数，只执行规定时间内触发的最后一次
+ * @param {void} fn 要执行的回调函数
+ * @param {number} time 延迟执行的时间
+ * @return () => void
  */
 export const debounce = (fn: () => void, time: number) => {
   let timerID: any = null
@@ -16,8 +18,10 @@ export const debounce = (fn: () => void, time: number) => {
 }
 
 /**
- * @throttle 节流函数，只执行规定时间内的第一次
- * 所谓节流，就是指连续触发事件，但是在n 秒中只执行一次函数，节流会稀释函数的执行频率
+ * @description 节流函数，只执行规定时间内的第一次（所谓节流，就是指连续触发事件，但是在n 秒中只执行一次函数，节流会稀释函数的执行频率)
+ * @param {void} fn 要执行的回调函数
+ * @param {number} time 延迟执行的时间
+ * @return () => void
  */
 export const throttle = (fn: () => void, time: number) => {
   let startDate = Date.now()
@@ -31,9 +35,11 @@ export const throttle = (fn: () => void, time: number) => {
 }
 
 /**
- * @roughFormattingTime 粗略计算时间格式
+ * @description 粗略的计算时间格式
+ * @param {number | string} time 需要处理的时间戳
+ * @return string
  */
-export const roughFormattingTime = (time: number | string) => {
+export const roughFormattingTime = (time: number | string): string => {
   // 距离现在的时间戳（秒）
   // const s = Math.round((Date.now() - Date.parse(time)) / 1000)
 
@@ -48,9 +54,11 @@ export const roughFormattingTime = (time: number | string) => {
 }
 
 /**
- * @carefulFormattingTime 精确计算时间格式
+ * @description 比较精确的计算时间格式
+ * @param {number | string} time 需要处理的时间戳
+ * @return string
  */
-export const carefulFormattingTime = (time: number | string) => {
+export const carefulFormattingTime = (time: number | string): string => {
   // 距离现在的时间戳（秒）
   // const s = Math.round((Date.now() - Date.parse(time)) / 1000)
   const s = Number(time)
@@ -112,7 +120,10 @@ export const carefulFormattingTime = (time: number | string) => {
 }
 
 /**
- * @deepClone 深拷贝
+ * @description 深拷贝
+ * @param {any} target 拷贝的对象
+ * @param {any} hashMap 存储拷贝对象的map容器
+ * @return any
  */
 export const deepClone = (target: any, hashMap: WeakMap<any, any> = new WeakMap()) => {
   // 自定义封装一个forEach 替代for in 遍历
@@ -161,13 +172,16 @@ export const deepClone = (target: any, hashMap: WeakMap<any, any> = new WeakMap(
 }
 
 /**
- * @formatDate 格式化时间戳
+ * @description 格式化时间戳
+ * @param {number | string | Date} date 时间戳
+ * @param {TFormat} format 格式化的数据模板
+ * @return string | number | Date
  */
 type TBFormat = 'L' | 'LL' | 'LLL' | 'LLLL' | 'LLLLL' | 'LLLLLL' | 'LLLLLLL' | 'LLLLLLLL' | 'LLLLLLLLL' | 'LLLLLLLLLL' | 'X' | 'XX' | 'XXX' | 'XXXX'
 type TMFormat = 'l' | 'll' | 'lll' | 'llll' | 'lllll' | 'llllll' | 'lllllll' | 'llllllll' | 'x' | 'xx' | 'xxx' | 'xxxx'
 type TFormat = TBFormat | TMFormat | undefined
 
-export const formatDate = (date: number | string | Date, format: TFormat = 'LLLLLLLLLL') => {
+export const formatDate = (date: number | string | Date, format: TFormat = 'LLLLLLLLLL'): string | number | Date => {
   const t = new Date(Number(date))
   const year = t.getFullYear()
   const month = t.getMonth()
@@ -245,11 +259,127 @@ export const formatDate = (date: number | string | Date, format: TFormat = 'LLLL
 }
 
 /**
- * @isType 判断数据类型
+ * @description 判断数据类型
+ * @param {any} val 需要判断类型的数据
+ * @return string
  */
-export const isType = (val: any) => {
+export const isType = (val: any): string => {
   if (val === null) return 'null'
   if (typeof val !== 'object') return typeof val
 
   return Object.prototype.toString.call(val).slice(8, -1).toLocaleLowerCase()
+}
+
+/**
+ * @description 对数值进行四舍五入，默认保留两位小数，尾数为0 自动省略
+ * @param {number | string} num 需要进行四舍五入的数据
+ * @param {number} decimal 保留的位数
+ * @return number
+ */
+export const handleRoundNum = (num: number | string, decimal = 2): number => {
+  // 1、组装数据，先乘做处理，然后做除法
+  // const targetNumber = Number(num)
+
+  // // 保留几位小数，先翻倍进行四舍五入再保留位数
+  // // const doubleNumber = Number(1 + ''.padEnd(decimal, '0'))
+  // const doubleNumber = Number([1, ...(new Array(decimal)).fill(0)].join(''))
+  // return Math.round(targetNumber * doubleNumber) / doubleNumber
+
+  // 2、使用科学计数法，本质还是先乘后除
+  const pair = `${num}e${decimal}`
+  const value = Math.round(+pair)
+  return +`${value}e${-decimal}`
+}
+
+/**
+ * @description 对数值进行处理，实现千位分隔符
+ * @param {number | string} num 需要处理的数据
+ * @return string
+ */
+export const handleThousands = (num: number | string): string => {
+  // 1、toLocaleString()
+  return Number(num).toLocaleString('en-US')
+
+  // 2、正则
+  // return String(num).replace(/(\d)(?=(\d{3})+$)/g, '$1,')
+
+  // 3、遍历
+  // const resStr = String(num).split('').reverse().map((item, index) => {
+  //   if ((index + 1) % 3 === 0) {
+  //     return [item, ',']
+  //   } else {
+  //     return item
+  //   }
+  // }).flat().reverse().join('')
+
+  // if (resStr[0] === ',') return resStr.slice(1)
+  // return resStr
+}
+
+/**
+ * @description 对运算进行处理，解决精度问题
+ * @param {number[]} arr 需要运算的数据
+ * @param {TType} type 运算的符号
+ * @return number
+ */
+type TType = '+' | '-' | '*' | '/'
+
+export const handlePrecision = (arr: number[], type: TType): number => {
+  const isInteger = (arr: number[]) => arr.every(num => Number.isInteger(num))
+
+  if (isInteger(arr)) {
+    switch (type) {
+      case '+':
+        return arr.reduce((pre, num) => pre + num)
+      case '-':
+        return arr.reduce((pre, num) => pre - num)
+      case '*':
+        return arr.reduce((pre, num) => pre * num)
+      case '/':
+        return arr.reduce((pre, num) => pre / num)
+      default:
+        throw Error('type 应该为 + - * /')
+    }
+  }
+
+  const handleNum = (arr: number[]) => {
+    const nums = arr.map(num => String(num)).map(num => {
+      if (!num.includes('.')) return num += '.'
+      return num
+    })
+
+    const lengths = nums.map(num => String(num).split('.')[1].length)
+    const max = Math.max(...lengths)
+    // const maxStr = ''.padEnd(max, '0')
+    // const number = Number(1 + ''.padEnd(max, '0'))
+
+    // const res = nums.map(num => {
+    //   const str = String(num) + maxStr
+    //   const index = [...str].indexOf('.') + max
+    //   const resStr = str.replace('.', '').slice(0, index)
+
+    //   return Number(resStr)
+    // })
+
+    // 使用科学计数法
+    const number = +`1e${max}`
+    const res = nums.map(num => +`${+num}e${max}`)
+
+    return [res, number]
+  }
+
+  const [nums, number] = handleNum(arr) as [number[], number]
+
+  switch (type) {
+    case '+':
+      return nums.reduce((pre, num) => pre + num) / number
+    case '-':
+      return nums.reduce((pre, num) => pre - num) / number
+    case '*':
+      return nums.reduce((pre, num) => pre * num) / Math.pow(number, 2)
+    case '/':
+      return nums.reduce((pre, num) => pre / num)
+    default:
+      throw Error('type 应该为 + - * /')
+  }
 }
