@@ -27,31 +27,28 @@ export const asyncRoutes: Array<IRoute> = [
   {
     path: '/practice',
     name: '练习',
-    key: '/practice',
     icon: <CalculatorOutlined />,
     element: <Practice />,
     meta: {
-      roles: ['admin', 'editor']
+      roles: ['admin', 'editor'],
+
     },
   },
   {
     path: '/user',
     name: '用户',
-    key: '/user',
     icon: <TeamOutlined />,
     element: <User />,
   },
   {
     path: '/component',
     name: '自定义组件',
-    key: '/component',
     icon: <LaptopOutlined />,
     element: <CustomElement />,
   },
   {
     path: '/charts',
     name: '图表展示',
-    key: '/charts',
     icon: <FundProjectionScreenOutlined />,
     meta: {
       roles: ['admin', 'visitor', 'editor']
@@ -60,7 +57,6 @@ export const asyncRoutes: Array<IRoute> = [
       {
         path: 'bar',
         name: '柱状图',
-        key: '/charts/bar',
         icon: <BarChartOutlined />,
         element: <Bar />,
         meta: {
@@ -70,7 +66,6 @@ export const asyncRoutes: Array<IRoute> = [
       {
         path: 'line',
         name: '折线图',
-        key: '/charts/line',
         icon: <LineChartOutlined />,
         element: <Line />,
         meta: {
@@ -80,7 +75,6 @@ export const asyncRoutes: Array<IRoute> = [
       {
         path: 'pie',
         name: '饼图',
-        key: '/charts/pie',
         icon: <PieChartOutlined />,
         element: <Pie />,
         meta: {
@@ -100,7 +94,6 @@ const constantRoutes: IRoute[] = [
   {
     path: '/home',
     name: '首页',
-    key: '/home',
     icon: <HomeOutlined />,
     element: <Home />
   },

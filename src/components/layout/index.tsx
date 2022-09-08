@@ -29,13 +29,21 @@ const LayoutComponent: React.FC<any> = ({ routes }) => {
   const menu = useMemo(() => routes?.filter((item: IRoute) => Object.prototype.hasOwnProperty.call(item, 'name')).map((item: IRoute) => {
     let ele = null
     if (!item.children) {
-      ele = { label: item.name, key: item.key, icon: item.icon }
+      ele = { label: item.name, key: item.path, icon: item.icon }
     } else {
+      const { name, path, icon } = item
+      const children = item.children.map(childItem => {
+        const { name, path: childPath, icon } = childItem
+        const key = `${path}/${childPath}`
+
+        return { label: name, key: key, icon: icon }
+      })
+
       ele = {
-        label: item.name,
-        key: item.key,
-        icon: item.icon,
-        children: item.children.map(childItem => ({ label: childItem.name, key: childItem.key, icon: childItem?.icon })),
+        label: name,
+        key: path,
+        icon: icon,
+        children: children
       }
     }
     return ele

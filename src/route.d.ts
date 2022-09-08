@@ -14,8 +14,6 @@ import { RouteObject } from 'react-router-dom'
 interface IRoute extends RouteObject {
   // 路由名称
   name?: string,
-  // 路由key 名
-  key?: string,
   // icon 图标
   icon?: React.ReactNode,
   // 路由元信息
