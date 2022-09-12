@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosError, AxiosResponse } from 'axios'
 import { message, Modal } from 'antd'
-import { getLocal } from '@/utils/storage'
+import { getLocal } from '../storage'
 import AdminConfig from '@/config'
 interface ResponseData<T> {
   code: number,

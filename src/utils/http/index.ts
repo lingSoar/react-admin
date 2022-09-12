@@ -1,4 +1,4 @@
-import service from './request';
+import service from './request'
 
 const fetch = (url: string, payload: any = {}, methos: 'GET' = 'GET') => {
   return new Promise((resolve, reject) => {

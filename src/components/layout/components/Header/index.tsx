@@ -3,8 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import screenfull from 'screenfull'
 import { Layout, Button } from 'antd'
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
-const { Header } = Layout
 import './index.scss'
+const { Header } = Layout
 
 const LayoutHeader: React.FC<any> = (props) => {
   const { baseCls, collapsed, setCollapsed } = props
