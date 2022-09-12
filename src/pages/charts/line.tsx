@@ -1,17 +1,20 @@
 import React, { useEffect, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 import * as echarts from 'echarts'
-
-
-
-
 
 const Line: React.FC = () => {
   const chartRef = useRef<any>(null)
 
+  const navigate = useNavigate()
+
+  const change = () => {
+    navigate('/charts/line/a/other')
+  }
+
   useEffect(() => {
     const chartDom = document.querySelector('.aaaa');
     console.log('chartDom', chartDom);
-    
+
     const myChart = echarts.init(chartDom as any);
     let option
 
@@ -85,11 +88,15 @@ const Line: React.FC = () => {
         };
       })
     };
-    
+
     option && myChart.setOption(option);
   }, [])
   return (
-    <div ref={chartRef} className={'aaaa'} style={{widows: 500, height: 500}}>折线图</div>
+    <div>
+      <div ref={chartRef} className={'aaaa'} style={{ widows: 500, height: 500 }}>折线图</div>
+      <button onClick={change}>跳转</button>
+    </div>
+
   )
 }
 

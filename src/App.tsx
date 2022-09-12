@@ -6,6 +6,7 @@ import routes from '@/routes'
 
 import Login from '@/pages/login'
 import LayoutComponent from '@/components/layout'
+import { IRoute } from './route'
 
 const App: React.FC = () => {
   const navigate = useNavigate()
@@ -16,7 +17,40 @@ const App: React.FC = () => {
   const { user } = useSelector(store => (store as IStore)?.user)
 
   const asyncRoutes = usePermission()
-  const userRoutes = useMemo(() => ([...routes, ...asyncRoutes]), [asyncRoutes])
+  const userRoutes = useMemo(() => {
+    // 检测roles 在嵌套路由中的权限，子路由所有的role 不得超出父级所拥有的role
+    const handleChildren = (children: Array<IRoute>, roles: string[]) => {
+      children.forEach(childrenRoute => {
+        if (childrenRoute?.children && childrenRoute?.meta?.roles) {
+          handleChildren(childrenRoute.children, childrenRoute.meta.roles)
+        }
+
+        if (childrenRoute?.meta?.roles) {
+          const childrenRoles = childrenRoute.meta.roles
+          const res = childrenRoles.every(item => roles.includes(item))
+
+          if (!res) throw childrenRoles
+        }
+      })
+    }
+
+    const handleRoles = (routes: Array<IRoute>) => {
+      routes.forEach(route => {
+        if (route?.meta?.roles && route?.children) {
+          const { meta: { roles }, children } = route
+          handleChildren(children, roles)
+        }
+      })
+    }
+
+    try {
+      handleRoles(asyncRoutes)
+    } catch (err) {
+      throw `路由信息配置错误, 子路由roles应该被包含于父路由roles中---roles: ${err}`
+    }
+
+    return [...routes, ...asyncRoutes]
+  }, [asyncRoutes])
 
   useEffect(() => {
     if (user.code !== 0 && pathname !== '/login') {

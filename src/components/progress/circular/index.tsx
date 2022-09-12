@@ -2,7 +2,7 @@
  * @CircularScale 定制化的进度圈组件
  */
 import React, { useMemo } from 'react'
-import './circular.scss'
+import './index.scss'
 
 const baseCls = 'admin-circular'
 

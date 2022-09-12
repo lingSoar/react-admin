@@ -1,0 +1,31 @@
+// 类名前缀和组件类名的基准一致
+$prefixCls: admin-layout-LayoutHeader;
+
+.#{$prefixCls} {
+  padding: 0 !important;
+  background: #fff !important;
+
+  &-content {
+    display: flex;
+    align-items: center;
+
+    &-folaicon {
+      padding-left: 20px;
+    }
+
+    &-title {
+      font-size: 35px;
+      padding: 0 50px;
+    }
+
+    .trigger {
+      font-size: 20px;
+      cursor: pointer;
+      transition: color 0.3s ease-out;
+    }
+
+    .trigger:hover {
+      color: #1890ff;
+    }
+  }
+}

@@ -1,82 +1,97 @@
 import React from 'react'
-import loadable from '@loadable/component'
 import { Navigate } from 'react-router-dom'
-import {
-  HomeOutlined,
-  CalculatorOutlined,
-  FundProjectionScreenOutlined,
-  PieChartOutlined,
-  BarChartOutlined,
-  LineChartOutlined,
-  TeamOutlined,
-  LaptopOutlined
-} from '@ant-design/icons'
+import lazyLoad from '@/utils/lazyLoad'
+import { HomeOutlined } from '@ant-design/icons'
 import { IRoute } from '@/route'
 
-const Pie = loadable(() => import('@/pages/charts/pie'))
-const Bar = loadable(() => import('@/pages/charts/bar'))
-const Line = loadable(() => import('@/pages/charts/line'))
-const Home = loadable(() => import('@/pages/home'))
-const NotFound = loadable(() => import('@/pages/notFound'))
-const Practice = loadable(() => import('@/pages/practice'))
-const User = loadable(() => import('@/pages/user'))
-const CustomElement = loadable(() => import('@/pages/custom'))
+const Pie = lazyLoad(React.lazy(() => import('@/pages/charts/pie')))
+const Bar = lazyLoad(React.lazy(() => import('@/pages/charts/bar')))
+const Line = lazyLoad(React.lazy(() => import('@/pages/charts/line')))
+const Home = lazyLoad(React.lazy(() => import('@/pages/home')))
+const NotFound = lazyLoad(React.lazy(() => import('@/pages/notFound')))
+const Practice = lazyLoad(React.lazy(() => import('@/pages/practice')))
+const User = lazyLoad(React.lazy(() => import('@/pages/user')))
+const CustomElement = lazyLoad(React.lazy(() => import('@/pages/custom')))
+const Other = lazyLoad(React.lazy(() => import('@/pages/other')))
 
 // 权限路由
 export const asyncRoutes: Array<IRoute> = [
   {
     path: '/practice',
     name: '练习',
-    icon: <CalculatorOutlined />,
-    element: <Practice />,
+    icon: 'CalculatorOutlined',
+    element: Practice,
     meta: {
       roles: ['admin', 'editor'],
-
+    },
+  },
+  {
+    path: '/charts/line/a/other',
+    element: Other,
+    meta: {
+      roles: ['admin', 'editor'],
+    },
+  },
+  {
+    path: '/practice/other',
+    element: Other,
+    meta: {
+      roles: ['admin'],
     },
   },
   {
     path: '/user',
     name: '用户',
-    icon: <TeamOutlined />,
-    element: <User />,
+    icon: 'TeamOutlined',
+    element: User,
   },
   {
     path: '/component',
     name: '自定义组件',
-    icon: <LaptopOutlined />,
-    element: <CustomElement />,
+    icon: 'LaptopOutlined',
+    element: CustomElement,
   },
   {
     path: '/charts',
     name: '图表展示',
-    icon: <FundProjectionScreenOutlined />,
+    icon: 'FundProjectionScreenOutlined',
     meta: {
-      roles: ['admin', 'visitor', 'editor']
+      roles: ['admin', 'visitor']
     },
     children: [
       {
-        path: 'bar',
+        path: '/charts/bar',
         name: '柱状图',
-        icon: <BarChartOutlined />,
-        element: <Bar />,
+        icon: 'BarChartOutlined',
+        element: Bar,
         meta: {
           roles: ['admin']
         },
       },
       {
-        path: 'line',
+        path: '/charts/line',
         name: '折线图',
-        icon: <LineChartOutlined />,
-        element: <Line />,
+        icon: 'LineChartOutlined',
         meta: {
-          roles: ['admin', 'editor']
+          roles: ['admin']
         },
+        children: [
+          {
+            path: '/charts/line/a',
+            name: '柱状图',
+            icon: 'BarChartOutlined',
+            element: Line,
+            meta: {
+              roles: ['admin']
+            },
+          },
+        ]
       },
       {
-        path: 'pie',
+        path: '/charts/pie',
         name: '饼图',
-        icon: <PieChartOutlined />,
-        element: <Pie />,
+        icon: 'PieChartOutlined',
+        element: Pie,
         meta: {
           roles: ['admin', 'visitor']
         },
@@ -95,11 +110,11 @@ const constantRoutes: IRoute[] = [
     path: '/home',
     name: '首页',
     icon: <HomeOutlined />,
-    element: <Home />
+    element: Home
   },
   {
     path: '*',
-    element: <NotFound />
+    element: NotFound
   }
 ]
 

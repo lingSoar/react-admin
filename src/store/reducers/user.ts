@@ -1,9 +1,9 @@
 /* eslint-disable-next-line */
 import produce from 'immer'
 import { SET_USERINF, REMOV_USERINF, CHANGE_USERINF } from '../constant'
-import { setUserInf, getUserInf, removeUserInf } from '@/utils/storage/user'
+import { setLocal, getLocal, removeLocal } from '@/utils/storage'
 
-const userInf = getUserInf('userInf')
+const userInf = getLocal('userInf')
 const initState: userState = {
   roles: userInf?.roles || ['admin'],
   user: userInf || {}
@@ -17,12 +17,12 @@ const userReducer = (state: userState = initState, { type, payload }: IDispatchP
       case SET_USERINF:
         cloneState.user = payload
         cloneState.roles = payload?.roles
-        setUserInf(payload)
+        setLocal('userInf', payload)
         break;
       case REMOV_USERINF:
         cloneState.user = {}
         cloneState.roles = []
-        removeUserInf(payload)
+        removeLocal(payload)
         break;
       case CHANGE_USERINF:
         cloneState.user = { ...cloneState.user, roles: [payload] }

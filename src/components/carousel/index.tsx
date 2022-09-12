@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useReducer, useCallback, useMemo } from 'react'
-import './carousel.scss'
+import './index.scss'
 
 const baseCls = 'admin-carousel'
 
