@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosError, AxiosResponse } from 'axios'
 import { message, Modal } from 'antd'
 import { getLocal } from '@/utils/storage'
-import AdminConfig from '@/config'
+import AdminConfig, { BASE_URL } from '@/config'
 interface ResponseData<T> {
   code: number,
   data: T,
@@ -9,20 +9,19 @@ interface ResponseData<T> {
   status: number,
 }
 
-const baseURL = 'http://localhost:3000'
 const service = axios.create({
-  baseURL: baseURL,
+  baseURL: BASE_URL,
   timeout: 6000
 })
 
 // 请求拦截
 service.interceptors.request.use(
   (config: AxiosRequestConfig) => {
-    const token = getLocal('token')
+    const token = getLocal(AdminConfig.TOKEN_KEY)
 
     // 获取用户token，用于校验
     if (token) {
-      (config as any).headers.token = token;
+      (config as any).headers.token = token
     }
     return config
   },
@@ -33,7 +32,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response: AxiosResponse<ResponseData<any>>) => {
     if (!response.data) {
-      return Promise.resolve(response);
+      return Promise.resolve(response)
     }
 
     // 登录已过期或者未登录
@@ -43,17 +42,17 @@ service.interceptors.response.use(
         content: response.data.msg,
         okText: '重新登录',
         onOk() {
-          // store.dispatch(clearSideBarRoutes());
-          // store.dispatch(logout());
+          // store.dispatch(clearSideBarRoutes())
+          // store.dispatch(logout())
           window.location.href = `${window.location.origin
-            }/login?redirectURL=${encodeURIComponent(window.location.href)}`;
+            }/login?redirectURL=${encodeURIComponent(window.location.href)}`
         },
         onCancel() {
           console.log('取消')
         },
-      });
+      })
 
-      return Promise.reject(new Error(response.data.msg));
+      return Promise.reject(new Error(response.data.msg))
     }
 
     // 请求成功时
@@ -62,8 +61,8 @@ service.interceptors.response.use(
     }
 
     // 请求成功，状态不为成功时
-    message.error(response.data.msg);
-    return Promise.reject(new Error(response.data.msg));
+    message.error(response.data.msg)
+    return Promise.reject(new Error(response.data.msg))
   },
   (error: AxiosError) => {
     message.error(error.message)

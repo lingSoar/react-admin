@@ -9,7 +9,7 @@ function filterAsyncRoutes(asyncRoutes: IRoute[], roles: Array<string>) {
     const route = { ...item }
     // 是否有权限
     if (hasPermission(route, roles)) {
-      if (route.children) {
+      if (route?.children) {
         route.children = filterAsyncRoutes(route.children, roles)
       }
       res.push(route)
@@ -19,15 +19,16 @@ function filterAsyncRoutes(asyncRoutes: IRoute[], roles: Array<string>) {
 }
 
 function hasPermission(route: IRoute, roles: Array<string>) {
-  if (route.meta && route.meta?.roles) {
+  if (route?.meta && route?.meta?.roles) {
     return roles.some(item => (route.meta as IRouteMeta).roles.includes(item))
   } else {
     return true
   }
 }
 
-export default function usePermission() {
+const usePermission = () => {
   const { roles } = useSelector(store => (store as IStore)?.user)
   const routes: Array<IRoute> = useMemo(() => filterAsyncRoutes(asyncRoutes, roles), [roles])
   return routes
 }
+export default usePermission

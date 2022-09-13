@@ -11,9 +11,9 @@ import { IRoute } from './route'
 const App: React.FC = () => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
+
   // 为了解决返回登录页，重定向闪屏的问题（方案待优化）
   const [isShow, setIsShow] = useState<boolean>(true)
-
   const { user } = useSelector(store => (store as IStore)?.user)
 
   const asyncRoutes = usePermission()

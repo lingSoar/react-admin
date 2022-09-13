@@ -5,7 +5,9 @@
 import React, { useRef, useEffect, useMemo } from 'react'
 import { useSelector } from 'react-redux'
 
-export default function usePermission(roles: Array<string> = [], element: () => React.ReactNode, isShow: boolean | undefined = true,) {
+type TUsePermission = (roles: string[], element: () => React.ReactNode, isShow?: boolean) => React.ReactNode | null
+
+const usePermission: TUsePermission = (roles = [], element, isShow = true) => {
   const containerRef = useRef(null)
   const { roles: userRole } = useSelector(store => (store as IStore)?.user)
   const isPermission = useMemo(() => userRole.some((role: string) => roles.includes(role)), [roles, userRole])
@@ -32,3 +34,5 @@ export default function usePermission(roles: Array<string> = [], element: () => 
     return isPermission ? element() : <span ref={containerRef}> {element()} </span>
   }
 }
+
+export default usePermission

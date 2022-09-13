@@ -8,7 +8,7 @@ import './index.scss'
 const CustomElement: React.FC = () => {
   const [schedule, setSchedule] = useState<number | string>(0)
   const [val, setVal] = useState<'top' | 'bottom' | 'left' | 'right'>('bottom')
-  const [data] = useState([1, 2, 3, 4, 5, 6, 7])
+  const [data] = useState([1])
   const carousel = useMemo(() => {
     return data.map((i, index) => (
       <div
@@ -86,10 +86,10 @@ const CustomElement: React.FC = () => {
       <div className='demo'>
         <h1>轮播图组件测试</h1>
         <select name='carousel' title='Carousel' value={val} onChange={(e: any) => setVal(e.target.value)}>
-          <option value="top">top</option>
-          <option value="bottom">bottom</option>
-          <option value="left">left</option>
-          <option value="right">right</option>
+          <option value='top'>top</option>
+          <option value='bottom'>bottom</option>
+          <option value='left'>left</option>
+          <option value='right'>right</option>
         </select>
         <div style={{ width: 700, height: 280, marginTop: 10 }} >
           <Carousel dotPosition={val} dotColor='red'>
@@ -102,7 +102,7 @@ const CustomElement: React.FC = () => {
         <h1>进度圈组件测试</h1>
         <CircularScale
           schedule={schedule}
-          copies='80'
+          // copies='80'
           size={150}
         // reticuleBgColor='#F69880'
         // maskBgColor='rgba(255, 76, 65, 0.15)'

@@ -106,17 +106,17 @@ textarea {
   outline: none;
 }
 
-/* 多行文本溢出出现省略号(兼容) */
-.textOverflow1 {
+/* 单行文本溢出出现省略号 */
+@mixin singletextOverflow {
+  white-space: nowrap;
   overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
 }
 
-.textOverflow2 {
+/* 多行文本溢出出现省略号(兼容) */
+@mixin textOverflow($line: 2) {
   overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: $line;
 }

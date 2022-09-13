@@ -2,25 +2,32 @@ import React, { ReactNode, useMemo, useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { Menu } from 'antd'
+import { ItemType } from 'antd/lib/menu/hooks/useItems'
 import { IRoute } from '@/route'
 import * as Icons from '@ant-design/icons'
 import { setLocal, getLocal } from '@/utils/storage'
 import './index.scss'
 
+interface IItem {
+  name: string
+  path: string
+  icon: ReactNode | string
+}
+
 const LayoutMenu: React.FC<any> = (props) => {
   const { collapsed, routes, baseCls } = props
   const cls = `${baseCls}-LayoutMenu`
+
   const { pathname } = useLocation()
+  const navigate = useNavigate()
+  const { roles } = useSelector(store => (store as IStore)?.user)
 
   const [selectedKeys, setSelectedKeys] = useState<string[]>([])
   const [openKeys, setOpenKeys] = useState<string[]>([])
 
-  const navigate = useNavigate()
-  const { roles } = useSelector(store => (store as IStore)?.user)
-
   // 动态渲染 Icon 图标
   const customIcons: { [key: string]: any } = Icons
-  const renderIcon = (name: string | ReactNode) => {
+  const renderIcon = (name: string | ReactNode): ReactNode => {
     if (typeof name === 'string') {
       return React.createElement(customIcons[name])
     }
@@ -29,10 +36,11 @@ const LayoutMenu: React.FC<any> = (props) => {
 
   // 依据路由处理侧边的菜单栏，拥有name 的路由会被渲染
   const menu = useMemo(() => {
-    const handleMenu = (routes: IRoute[]) => {
+    const handleMenu = (routes: IRoute[]): ItemType[] => {
       const menuRoutes = routes.filter((route: IRoute) => Object.prototype.hasOwnProperty.call(route, 'name'))
-      const menu: any = menuRoutes.map((route: IRoute) => {
-        const { name, path, icon } = route
+
+      const menu: ItemType[] = menuRoutes.map((route: IRoute) => {
+        const { name, path, icon } = route as IItem
         if (route?.children) {
           const childrenMenu = handleMenu(route.children)
           return { label: name, key: path, icon: renderIcon(icon), children: childrenMenu }
@@ -103,7 +111,7 @@ const LayoutMenu: React.FC<any> = (props) => {
       <Menu
         theme='dark'
         mode='inline'
-        triggerSubMenuAction="click"
+        triggerSubMenuAction='click'
         selectedKeys={selectedKeys}
         openKeys={openKeys}
         items={menu}

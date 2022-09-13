@@ -6,6 +6,7 @@ import { Spin } from 'antd'
  * @param {Element} Component 需要访问的组件
  * @returns element
  */
+
 const lazyLoad = (Component: React.LazyExoticComponent<any>): React.ReactNode => {
   return (
     <Suspense
@@ -23,7 +24,7 @@ const lazyLoad = (Component: React.LazyExoticComponent<any>): React.ReactNode =>
     >
       <Component />
     </Suspense>
-  );
-};
+  )
+}
 
 export default lazyLoad

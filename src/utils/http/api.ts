@@ -1,4 +1,4 @@
-// import fetch from '.';
+// import fetch from '.'
 
 interface ILogin {
   username: string

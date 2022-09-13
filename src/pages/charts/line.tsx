@@ -12,10 +12,10 @@ const Line: React.FC = () => {
   }
 
   useEffect(() => {
-    const chartDom = document.querySelector('.aaaa');
-    console.log('chartDom', chartDom);
+    const chartDom = document.querySelector('.aaaa')
+    console.log('chartDom', chartDom)
 
-    const myChart = echarts.init(chartDom as any);
+    const myChart = echarts.init(chartDom as any)
     let option
 
     const datas = [
@@ -29,7 +29,7 @@ const Line: React.FC = () => {
         { name: '其它', value: 3.8 }
       ],
       // ////////////////////////////////////////
-    ];
+    ]
 
     // eslint-disable-next-line prefer-const
     option = {
@@ -43,7 +43,7 @@ const Line: React.FC = () => {
         }
       },
       series: datas.map(function (data, idx) {
-        const top = idx * 33.3;
+        const top = idx * 33.3
         return {
           type: 'pie',
           radius: [20, 60],
@@ -74,22 +74,22 @@ const Line: React.FC = () => {
             maxSurfaceAngle: 80
           },
           labelLayout: function (params: any) {
-            const isLeft = params.labelRect.x < myChart.getWidth() / 2;
-            const points = params.labelLinePoints;
+            const isLeft = params.labelRect.x < myChart.getWidth() / 2
+            const points = params.labelLinePoints
             // Update the end point.
             points[2][0] = isLeft
               ? params.labelRect.x
-              : params.labelRect.x + params.labelRect.width;
+              : params.labelRect.x + params.labelRect.width
             return {
               labelLinePoints: points
-            };
+            }
           },
           data: data
-        };
+        }
       })
-    };
+    }
 
-    option && myChart.setOption(option);
+    option && myChart.setOption(option)
   }, [])
   return (
     <div>

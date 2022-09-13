@@ -18,17 +18,17 @@ const userReducer = (state: userState = initState, { type, payload }: IDispatchP
         cloneState.user = payload
         cloneState.roles = payload?.roles
         setLocal('userInf', payload)
-        break;
+        break
       case REMOV_USERINF:
         cloneState.user = {}
         cloneState.roles = []
         removeLocal(payload)
-        break;
+        break
       case CHANGE_USERINF:
         cloneState.user = { ...cloneState.user, roles: [payload] }
-        break;
+        break
       default:
-        break;
+        break
     }
   })
 }

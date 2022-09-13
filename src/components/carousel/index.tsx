@@ -13,10 +13,14 @@ interface IProps {
   children: Array<JSX.Element>
 }
 
-type IReducerType = 'normal' | 'next' | 'pre' | undefined
-type IReducerPayload = {
+type TActionType = 'normal' | 'next' | 'pre'
+type TActionPayload = {
   currentIndex?: number
   animation?: string
+}
+interface IAction {
+  type: TActionType
+  payload?: TActionPayload
 }
 
 const Carousel: React.FC<IProps> = (props) => {
@@ -27,7 +31,7 @@ const Carousel: React.FC<IProps> = (props) => {
   const ref = useRef(null)
   const timer = useRef<any>(null)
 
-  const [state, dispatch] = useReducer((preState: any, action: { type?: IReducerType; payload?: IReducerPayload }) => {
+  const [state, dispatch] = useReducer((preState: any, action: IAction) => {
     const { currentIndex } = preState
     const { type, payload } = action
 
@@ -41,17 +45,17 @@ const Carousel: React.FC<IProps> = (props) => {
       default:
         return { ...preState }
     }
-  }, { currentIndex: 1, animation: 'none' } as IReducerPayload)
+  }, { currentIndex: 1, animation: 'none' } as TActionPayload)
   const { currentIndex, animation } = state
 
   // 初始化操作，复制第一个元素到最后，复制最后一个元素到最前头，解决轮播切换首尾的的不连贯
   const init = useCallback(() => {
     const dom = (ref.current as unknown as HTMLDivElement)
-    const firstNode = dom?.firstElementChild?.cloneNode(true);
-    const lastNode = dom?.lastElementChild?.cloneNode(true);
+    const firstNode = dom?.firstElementChild?.cloneNode(true)
+    const lastNode = dom?.lastElementChild?.cloneNode(true)
 
-    dom?.appendChild(firstNode as Node);
-    dom?.insertBefore(lastNode as Node, dom?.firstElementChild);
+    dom?.appendChild(firstNode as Node)
+    dom?.insertBefore(lastNode as Node, dom?.firstElementChild)
 
     // 解决flex 布局中，主轴宽度不够，子元素不认宽高的问题
     Array.from(dom.children).forEach((item: any) => item.style.flex = 'none')

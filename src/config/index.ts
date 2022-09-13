@@ -24,7 +24,7 @@ const AdminConfig: Config = {
   LOGIN_EXPIRE: 400,
 
   // 统一请求地址
-  API_URL: 'https://www.landluck.cn/react-ant-admin-api',
+  API_URL: '',
 
   // 本地存储token 的key
   TOKEN_KEY: 'Admin_Token_key',
@@ -46,6 +46,7 @@ const AdminConfig: Config = {
 
   // 项目名称
   title: 'React Admin',
-};
+}
 
+export const BASE_URL = 'http://localhost:8999'
 export default AdminConfig

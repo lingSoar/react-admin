@@ -2,7 +2,7 @@ import service from './request'
 
 const fetch = (url: string, payload: any = {}, methos: 'GET' = 'GET') => {
   return new Promise((resolve, reject) => {
-    const promise = methos === 'GET' ? service.get(url, { params: payload }) : service.post(url, payload);
+    const promise = methos === 'GET' ? service.get(url, { params: payload }) : service.post(url, payload)
 
     promise.then(res => {
       resolve(res)

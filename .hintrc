@@ -1,0 +1,19 @@
+/* 忽略css 代码检测的文件配置*/
+{
+  "extends": [
+    "development"
+  ],
+  "hints": {
+    "compat-api/css": [
+      "default",
+      {
+        "ignore": [
+          "transition",
+          "-webkit-box-orient",
+          "-webkit-line-clamp"
+        ]
+      }
+    ],
+    "no-inline-styles": "off"
+  }
+}

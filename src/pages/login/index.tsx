@@ -26,11 +26,11 @@ const Login: React.FC = () => {
     }).catch((err: any) => {
       message.error(err.error)
     })
-  };
+  }
 
   const onFinishFailed = () => {
     message.error('用户名或者是密码错误')
-  };
+  }
 
   // 清除表单数据，setFieldsValue 在onFinish 里不会被执行
   useEffect(() => {

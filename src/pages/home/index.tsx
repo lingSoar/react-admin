@@ -12,7 +12,7 @@ const Home: React.FC = () => {
   const handleUser = (user: string) => {
     dispatch(clearUserInf('userInf'))
     dispatch(changeUserInf(user))
-    message.info('用户信息改变，重新登陆');
+    message.info('用户信息改变，重新登陆')
     setTimeout(() => {
       navigate('/login', { replace: true })
     }, 10)
@@ -45,9 +45,9 @@ const Home: React.FC = () => {
       <h1>首页</h1>
       <div>
         <h1>切换用户</h1>
-        <Button type="primary" danger onClick={() => handleUser('admin')}>admin</Button>&nbsp;
-        <Button type="primary" danger onClick={() => handleUser('editor')}>editor</Button>&nbsp;
-        <Button type="primary" danger onClick={() => handleUser('visitor')}>visitor</Button>
+        <Button type='primary' danger onClick={() => handleUser('admin')}>admin</Button>&nbsp;
+        <Button type='primary' danger onClick={() => handleUser('editor')}>editor</Button>&nbsp;
+        <Button type='primary' danger onClick={() => handleUser('visitor')}>visitor</Button>
       </div>
 
       <div>

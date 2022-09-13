@@ -8,29 +8,29 @@ const { Header } = Layout
 
 const LayoutHeader: React.FC<any> = (props) => {
   const { baseCls, collapsed, setCollapsed } = props
-  const navigate = useNavigate()
-  const { pathname, state } = useLocation()
   const cls = `${baseCls}-LayoutHeader`
+
+  const navigate = useNavigate()
+  const { pathname, state } = useLocation() as { pathname: string, state: any }
 
   const [isFull, setIsFull] = useState<boolean>(true)
   const [title, setTitle] = useState<string>('首页')
 
   // 侧边菜单标题显示
   useEffect(() => {
-    (state as any)?.name && setTitle((state as any)?.name)
+    state?.name && setTitle(state?.name)
 
     switch (pathname) {
       case '/study':
         navigate('/study/cnode')
-        break;
+        break
       case '/charts':
         navigate('/charts/broCharts')
-        break;
+        break
       default:
-        break;
+        break
     }
-    /* eslint-disable-next-line */
-  }, [navigate, pathname, (state as any)?.name])
+  }, [navigate, pathname, state?.name])
 
   // 全屏操作
   const fullscreen = () => {
@@ -39,6 +39,7 @@ const LayoutHeader: React.FC<any> = (props) => {
       setIsFull(!isFull)
     }
   }
+  
   return (
     <Header className={`${cls}`}>
       <div className={`${cls}-content`}>

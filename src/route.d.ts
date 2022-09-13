@@ -8,16 +8,16 @@ interface IRouteMeta {
 }
 
 interface IRoute {
-  caseSensitive?: boolean;
-  children?: IRoute[];
-  element?: React.ReactNode;
-  index?: boolean;
-  path?: string;
+  caseSensitive?: boolean
+  children?: IRoute[]
+  element?: React.ReactNode
+  index?: boolean
+  path?: string
   // 路由名称
-  name?: string;
+  name?: string
   // icon 图标
-  icon?: ReactNode | string;
+  icon?: ReactNode | string
   // 路由元信息
-  meta?: IRouteMeta;
+  meta?: IRouteMeta
 }
 
