@@ -259,18 +259,6 @@ export const formatDate = (date: number | string | Date, format: TFormat = 'LLLL
 }
 
 /**
- * @description 判断数据类型
- * @param {any} val 需要判断类型的数据
- * @return string
- */
-export const isType = (val: any): string => {
-  if (val === null) return 'null'
-  if (typeof val !== 'object') return typeof val
-
-  return Object.prototype.toString.call(val).slice(8, -1).toLocaleLowerCase()
-}
-
-/**
  * @description 对数值进行四舍五入，默认保留两位小数，尾数为0 自动省略
  * @param {number | string} num 需要进行四舍五入的数据
  * @param {number} decimal 保留的位数
@@ -382,4 +370,43 @@ export const handlePrecision = (arr: number[], type: TType): number => {
     default:
       throw Error('type 应该为 + - * /')
   }
+}
+
+/**
+ * @description 判断数据类型
+ * @param {any} val 需要判断类型的数据
+ * @return string
+ */
+ export const isType = (val: any): string => {
+  if (val === null) return 'null'
+  if (typeof val !== 'object') return typeof val
+
+  return Object.prototype.toString.call(val).slice(8, -1).toLocaleLowerCase()
+}
+
+/**
+ * @description 判断对象是否为空
+ * @param {any} obj 需要运算的数据
+ * @return boolen
+ */
+export const isNullObject = (obj: any): boolean => {
+  if (obj === null) throw `检查对象不合法: ${null}`
+  if (typeof obj !== 'object' && obj !== null) throw `检查对象不合法: ${obj}`
+
+  if (Array.isArray(obj) && obj.length === 0) return true
+  if (obj.constructor === Object && Reflect.ownKeys(obj).length === 0) return true
+
+  return false
+}
+
+/**
+ * @description 生成随机数
+ * @param {number} min 最小值
+ * @param {number} max 最大值
+ * @return number
+ */
+export const randomNum = (min: number, max: number): number => {
+  const num = Math.round(Math.random() * Math.abs(max - min) + Math.min(min, max))
+  if (num === 0) return 0
+  return num
 }
