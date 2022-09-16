@@ -286,22 +286,22 @@ export const handleRoundNum = (num: number | string, decimal = 2): number => {
  */
 export const handleThousands = (num: number | string): string => {
   // 1、toLocaleString()
-  return Number(num).toLocaleString('en-US')
+  // return Number(num).toLocaleString('en-US')
 
   // 2、正则
   // return String(num).replace(/(\d)(?=(\d{3})+$)/g, '$1,')
 
   // 3、遍历
-  // const resStr = String(num).split('').reverse().map((item, index) => {
-  //   if ((index + 1) % 3 === 0) {
-  //     return [item, ',']
-  //   } else {
-  //     return item
-  //   }
-  // }).flat().reverse().join('')
+  const resStr = String(num).split('').reverse().flatMap((item, index) => {
+    if ((index + 1) % 3 === 0) {
+      return [item, ',']
+    } else {
+      return item
+    }
+  }).reverse().join('')
 
-  // if (resStr[0] === ',') return resStr.slice(1)
-  // return resStr
+  if (resStr[0] === ',') return resStr.slice(1)
+  return resStr
 }
 
 /**
