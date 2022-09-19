@@ -17,6 +17,7 @@ export const debounce = (fn: () => void, time: number) => {
   }
 }
 
+
 /**
  * @description 节流函数，只执行规定时间内的第一次（所谓节流，就是指连续触发事件，但是在n 秒中只执行一次函数，节流会稀释函数的执行频率)
  * @param {void} fn 要执行的回调函数
@@ -34,12 +35,13 @@ export const throttle = (fn: () => void, time: number) => {
   }
 }
 
+
 /**
  * @description 粗略的计算时间格式
  * @param {number | string} time 需要处理的时间戳
  * @return string
  */
-export const roughFormattingTime = (time: number | string): string => {
+export const roughFormatTime = (time: number | string | Date): string => {
   // 距离现在的时间戳（秒）
   // const s = Math.round((Date.now() - Date.parse(time)) / 1000)
 
@@ -53,12 +55,13 @@ export const roughFormattingTime = (time: number | string): string => {
   return Math.floor(s / 60 / 60 / 24 / 30 / 12) + '年'
 }
 
+
 /**
  * @description 比较精确的计算时间格式
  * @param {number | string} time 需要处理的时间戳
  * @return string
  */
-export const carefulFormattingTime = (time: number | string): string => {
+export const carefulFormatTime = (time: number | string | Date): string => {
   // 距离现在的时间戳（秒）
   // const s = Math.round((Date.now() - Date.parse(time)) / 1000)
   const s = Number(time)
@@ -119,6 +122,7 @@ export const carefulFormattingTime = (time: number | string): string => {
   return handleYear(s)
 }
 
+
 /**
  * @description 深拷贝
  * @param {any} target 拷贝的对象
@@ -127,7 +131,7 @@ export const carefulFormattingTime = (time: number | string): string => {
  */
 export const deepClone = (target: any, hashMap: WeakMap<any, any> = new WeakMap()) => {
   // 自定义封装一个forEach 替代for in 遍历
-  const _forEach = (array: any[], iteratee: (value: any, key: any) => void) => {
+  const _forEach = (array: any[], iteratee: (value: any, key: number) => void) => {
     let index = -1
     const length = array.length
     while (++index < length) {
@@ -136,7 +140,7 @@ export const deepClone = (target: any, hashMap: WeakMap<any, any> = new WeakMap(
   }
 
   // 引用数据类型则进行拷贝
-  if (typeof target === 'object') {
+  if (typeof target === 'object' && target !== null) {
     const isArray = Array.isArray(target)
     const cloneTarget: any = isArray ? [] : {}
     /**
@@ -170,6 +174,7 @@ export const deepClone = (target: any, hashMap: WeakMap<any, any> = new WeakMap(
   // 非引用数据类型，直接返回
   return target
 }
+
 
 /**
  * @description 格式化时间戳
@@ -258,6 +263,7 @@ export const formatDate = (date: number | string | Date, format: TFormat = 'LLLL
   }
 }
 
+
 /**
  * @description 对数值进行四舍五入，默认保留两位小数，尾数为0 自动省略
  * @param {number | string} num 需要进行四舍五入的数据
@@ -266,18 +272,19 @@ export const formatDate = (date: number | string | Date, format: TFormat = 'LLLL
  */
 export const handleRoundNum = (num: number | string, decimal = 2): number => {
   // 1、组装数据，先乘做处理，然后做除法
-  // const targetNumber = Number(num)
+  const targetNumber = Number(num)
 
-  // // 保留几位小数，先翻倍进行四舍五入再保留位数
-  // // const doubleNumber = Number(1 + ''.padEnd(decimal, '0'))
+  // 保留几位小数，先翻倍进行四舍五入再保留位数
+  const doubleNumber = Number(1 + ''.padEnd(decimal, '0'))
   // const doubleNumber = Number([1, ...(new Array(decimal)).fill(0)].join(''))
-  // return Math.round(targetNumber * doubleNumber) / doubleNumber
+  return Math.round(targetNumber * doubleNumber) / doubleNumber
 
   // 2、使用科学计数法，本质还是先乘后除
-  const pair = `${num}e${decimal}`
-  const value = Math.round(+pair)
-  return +`${value}e${-decimal}`
+  // const pair = `${num}e${decimal}`
+  // const value = Math.round(+pair)
+  // return +`${value}e${-decimal}`
 }
+
 
 /**
  * @description 对数值进行处理，实现千位分隔符
@@ -291,18 +298,27 @@ export const handleThousands = (num: number | string): string => {
   // 2、正则
   // return String(num).replace(/(\d)(?=(\d{3})+$)/g, '$1,')
 
-  // 3、遍历
-  const resStr = String(num).split('').reverse().flatMap((item, index) => {
-    if ((index + 1) % 3 === 0) {
-      return [item, ',']
-    } else {
-      return item
-    }
-  }).reverse().join('')
+  // 3、遍历处理
+  const str = String(num)
+  const handleNumber = (strNumber: string) => {
+    const resStr = strNumber
+      .split('')
+      .reverse()
+      .flatMap((item, index) => (index + 1) % 3 === 0 ? [item, ','] : item)
+      .reverse()
+      .join('')
 
-  if (resStr[0] === ',') return resStr.slice(1)
-  return resStr
+    return resStr[0] === ',' ? resStr.slice(1) : resStr
+  }
+
+  if (str.includes('.')) {
+    const index = str.indexOf('.')
+    return handleNumber(str.slice(0, index)) + str.slice(index)
+  }
+
+  return handleNumber(str)
 }
+
 
 /**
  * @description 对运算进行处理，解决精度问题
@@ -330,33 +346,35 @@ export const handlePrecision = (arr: number[], type: TType): number => {
     }
   }
 
-  const handleNum = (arr: number[]) => {
-    const nums = arr.map(num => String(num)).map(num => {
-      if (!num.includes('.')) return num += '.'
-      return num
+  const handleNumber = (arr: number[]) => {
+    const nums: string[] = arr.map(num => {
+      let str = String(num)
+
+      return !str.includes('.') ? str += '.' : str
     })
 
-    const lengths = nums.map(num => String(num).split('.')[1].length)
+    const lengths = nums.map(num => num.split('.')[1].length)
     const max = Math.max(...lengths)
-    // const maxStr = ''.padEnd(max, '0')
-    // const number = Number(1 + ''.padEnd(max, '0'))
 
-    // const res = nums.map(num => {
-    //   const str = String(num) + maxStr
-    //   const index = [...str].indexOf('.') + max
-    //   const resStr = str.replace('.', '').slice(0, index)
+    // 1、借助字符串操作解决
+    const maxStr = ''.padEnd(max, '0')
+    const number = Number(1 + ''.padEnd(max, '0'))
+    const res = nums.map(num => {
+      const str = num + maxStr
+      const index = [...str].indexOf('.') + max
+      const resStr = str.replace('.', '').slice(0, index)
 
-    //   return Number(resStr)
-    // })
+      return Number(resStr)
+    })
 
-    // 使用科学计数法
-    const number = +`1e${max}`
-    const res = nums.map(num => +`${+num}e${max}`)
+    // 2、使用科学计数法
+    // const number = +`1e${max}`
+    // const res = nums.map(num => +`${+num}e${max}`)
 
     return [res, number]
   }
 
-  const [nums, number] = handleNum(arr) as [number[], number]
+  const [nums, number] = handleNumber(arr) as [number[], number]
 
   switch (type) {
     case '+':
@@ -372,32 +390,40 @@ export const handlePrecision = (arr: number[], type: TType): number => {
   }
 }
 
+
 /**
  * @description 判断数据类型
  * @param {any} val 需要判断类型的数据
  * @return string
  */
- export const isType = (val: any): string => {
+export const isType = (val: any): string => {
   if (val === null) return 'null'
   if (typeof val !== 'object') return typeof val
 
   return Object.prototype.toString.call(val).slice(8, -1).toLocaleLowerCase()
 }
 
+
 /**
  * @description 判断对象是否为空
  * @param {any} obj 需要运算的数据
  * @return boolen
  */
-export const isNullObject = (obj: any): boolean => {
-  if (obj === null) throw `检查对象不合法: ${null}`
-  if (typeof obj !== 'object' && obj !== null) throw `检查对象不合法: ${obj}`
+export const isNullObject = (obj: any): any => {
+  if (obj === null) {
+    return console.error(`TypeError: 检查的对象不合法: ${null}`)
+  }
+
+  if (typeof obj !== 'object' && obj !== null) {
+    return console.error(`TypeError: 检查对象不合法: ${obj}`)
+  }
 
   if (Array.isArray(obj) && obj.length === 0) return true
   if (obj.constructor === Object && Reflect.ownKeys(obj).length === 0) return true
 
   return false
 }
+
 
 /**
  * @description 生成随机数
@@ -407,6 +433,33 @@ export const isNullObject = (obj: any): boolean => {
  */
 export const randomNum = (min: number, max: number): number => {
   const num = Math.round(Math.random() * Math.abs(max - min) + Math.min(min, max))
-  if (num === 0) return 0
-  return num
+
+  return num === 0 ? 0 : num
+}
+
+
+/**
+ * @description 大小写转换
+ * @param {string} str 转换的字符
+ * @param {TCase} type 类型
+ * @return string
+ */
+type TCase = 'allCapital' | 'allLowercase' | 'initialCapital' | 'allInitialCapital'
+
+export const turnCase = (target: string, type: TCase = 'allInitialCapital'): string => {
+  const str = target.trimStart()
+  if (str === '') return target
+
+  switch (type) {
+    case 'allCapital': // 全部转大写
+      return str.toUpperCase()
+    case 'allLowercase': // 全部转小写
+      return str.toLowerCase()
+    case 'initialCapital': // 仅仅首字母大写，其他不变
+      return str[0].toUpperCase() + str.slice(1)
+    case 'allInitialCapital': // 所有词组的首字母大写
+      return str.split(' ').map(s => s === '' ? '' : s[0].toUpperCase() + s.slice(1)).join(' ')
+    default:
+      return str
+  }
 }
