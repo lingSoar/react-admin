@@ -11,7 +11,8 @@ import {
   isNullObject,
   roughFormatTime,
   carefulFormatTime,
-  turnCase
+  turnCase,
+  handleRepetitiveArr
 } from '@/utils'
 
 const Practice: React.FC = () => {
@@ -56,6 +57,25 @@ const Practice: React.FC = () => {
   console.log('大小写转换，仅仅首字母大写---', turnCase(str, 'initialCapital'));
   console.log('大小写转换，所有词组首字母大写---', turnCase(str, 'allInitialCapital'));
   console.log('大小写转换，默认---', turnCase(str));
+
+
+  const arr1 = [
+    { id: 1, name: '刘麻子', age: 18, hobby: 1, },
+    { id: 2, name: '张三', age: 28, hobby: 1, },
+    { id: 1, name: '李四', age: 18, hobby: 1, },
+    { id: 3, name: '张三', age: 38, hobby: 1, },
+    { id: 4, name: '王老五', age: 19, hobby: 1, },
+    { id: 4, name: '刘麻子', age: 16, hobby: 1, },
+    { id: 5, name: '臭猪猪', age: 21, hobby: 1, },
+    { id: 6, name: '傻憨憨', age: 25, hobby: 1, },
+    { id: 3, name: '土老帽', age: 19, hobby: 1, },
+    { id: 2, name: '李四', age: 38, hobby: 1, },
+  ]
+  const arr2 = [1, 2, 3, 4, 5, 1, 3, 2,]
+
+  console.log('指定数组去重, id---', handleRepetitiveArr(arr1, 'id'));
+  console.log('指定数组去重, 基本数据类型---', handleRepetitiveArr(arr2));
+
 
   const change = () => {
     navigate('/practice/other')

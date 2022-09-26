@@ -463,3 +463,35 @@ export const turnCase = (target: string, type: TCase = 'allInitialCapital'): str
       return str
   }
 }
+
+
+/**
+ * @description 指定数组去重，只考虑第一层数据
+ * @param {any[]} arr 需要去重的数组
+ * @param {string} key 数组中每一项去重的key 值
+ * @return any[]
+ */
+
+export const handleRepetitiveArr = <T>(arr: Array<T>, key?: string) => {
+  const isBasicType = (target: any) => {
+    if (target === null) return true
+    if (typeof target === 'function') return false
+    if (typeof target !== 'object') return true
+
+    return false
+  }
+
+  const isBasic = arr.every(item => isBasicType(item))
+  if (isBasic) return [...new Set(arr)]
+
+  if (key) {
+    const hasItem = (current: Array<T>, target: string) => current.some((t: any) => t[key] === target)
+    
+    return arr.reduce((pre: Array<T>, item: any) => {
+      if (hasItem(pre, item[key])) return pre
+
+      return [...pre, item]
+    }, [])
+  }
+  return arr
+}
