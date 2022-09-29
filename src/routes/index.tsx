@@ -5,7 +5,7 @@
 import React from 'react'
 import { Navigate } from 'react-router-dom'
 import { HomeOutlined } from '@ant-design/icons'
-import lazyLoad from '@/utils/lazyLoad'
+import lazyLoad from '@/routes/utils'
 import { IRoute } from '@/route'
 
 const Pie = lazyLoad(React.lazy(() => import('@/pages/charts/pie')))
