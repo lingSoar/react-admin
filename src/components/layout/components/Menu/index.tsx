@@ -5,7 +5,7 @@ import { Menu } from 'antd'
 import { ItemType } from 'antd/lib/menu/hooks/useItems'
 import { IRoute } from '@/route'
 import * as Icons from '@ant-design/icons'
-import { setLocal, getLocal } from '@/utils/storage'
+import storage from '@/utils/storage'
 import './index.scss'
 
 interface IItem {
@@ -60,14 +60,15 @@ const LayoutMenu: React.FC<any> = (props) => {
     const { domEvent: { target }, key } = menuItem
     const title = target.innerText
     setSelectedKeys([key])
-    setLocal('openKeys', key)
+    storage.setStorage('openKeys', key)
+    storage.setStorage('header_title', title)
 
     if (key) {
       navigate(key, {
         replace: false,
-        state: {
-          name: title
-        }
+        // state: {
+        //   name: title
+        // }
       })
     }
   }
@@ -86,7 +87,7 @@ const LayoutMenu: React.FC<any> = (props) => {
       return newArr
     }
 
-    setSelectedKeys([getLocal('openKeys')])
+    setSelectedKeys([storage.getStorage('openKeys')])
     !collapsed && setOpenKeys(getOpenKeys(pathname))
   }, [pathname, collapsed])
 

@@ -471,7 +471,6 @@ export const turnCase = (target: string, type: TCase = 'allInitialCapital'): str
  * @param {string} key 数组中每一项去重的key 值
  * @return any[]
  */
-
 export const handleRepetitiveArr = <T>(arr: Array<T>, key?: string) => {
   const isBasicType = (target: any) => {
     if (target === null) return true

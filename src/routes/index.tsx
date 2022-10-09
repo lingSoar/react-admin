@@ -1,6 +1,7 @@
 /**
- * 路由配置中存在name 的，且当前登录用户拥有访问权限的，才会被渲染到菜单栏
- * 路由配置meta 中的roles 表示该路由可访问的用户，其子路由中设置的权限用户不得超出父级所配置的权限用户
+ * @description
+ *   路由配置中存在name 的，且当前登录用户拥有访问权限的，才会被渲染到菜单栏
+ *   路由配置meta 中的roles 表示该路由可访问的用户，其子路由中设置的权限用户不得超出父级所配置的权限用户
  */
 import React from 'react'
 import { Navigate } from 'react-router-dom'

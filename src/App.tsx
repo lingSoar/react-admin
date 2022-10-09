@@ -1,12 +1,13 @@
 import React, { useMemo, useEffect, useState } from 'react'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import usePermission from '@/permission'
+import usePermission, { handleRoles } from '@/permission'
 import routes from '@/routes'
 
 import Login from '@/pages/login'
 import LayoutComponent from '@/components/layout'
-import { IRoute } from './route'
+import storage from './utils/storage'
+
 
 const App: React.FC = () => {
   const navigate = useNavigate()
@@ -18,31 +19,6 @@ const App: React.FC = () => {
 
   const asyncRoutes = usePermission()
   const userRoutes = useMemo(() => {
-    // 检测roles 在嵌套路由中的权限，子路由所有的role 不得超出父级所拥有的role
-    const handleChildren = (children: Array<IRoute>, roles: string[]) => {
-      children.forEach(childrenRoute => {
-        if (childrenRoute?.children && childrenRoute?.meta?.roles) {
-          handleChildren(childrenRoute.children, childrenRoute.meta.roles)
-        }
-
-        if (childrenRoute?.meta?.roles) {
-          const childrenRoles = childrenRoute.meta.roles
-          const res = childrenRoles.every(item => roles.includes(item))
-
-          if (!res) throw childrenRoles
-        }
-      })
-    }
-
-    const handleRoles = (routes: Array<IRoute>) => {
-      routes.forEach(route => {
-        if (route?.meta?.roles && route?.children) {
-          const { meta: { roles }, children } = route
-          handleChildren(children, roles)
-        }
-      })
-    }
-
     try {
       handleRoles(asyncRoutes)
     } catch (err) {
@@ -65,6 +41,15 @@ const App: React.FC = () => {
       setIsShow(true)
     }
   }, [navigate, pathname, user])
+
+  useEffect(() => {
+    const path = storage.getStorage('openKeys')
+    if (path) {
+      navigate(path)
+    } else {
+      navigate('/login')
+    }
+  }, [navigate])
 
   return (
     <Routes>

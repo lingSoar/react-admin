@@ -4,7 +4,7 @@ import { Spin } from 'antd'
 /**
  * @description 路由懒加载
  * @param {Element} Component 需要访问的组件
- * @returns element
+ * @return element
  */
 
 const lazyLoad = (Component: React.LazyExoticComponent<any>): React.ReactNode => {

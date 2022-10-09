@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   handleThousands,
@@ -12,8 +12,10 @@ import {
   roughFormatTime,
   carefulFormatTime,
   turnCase,
-  handleRepetitiveArr
+  handleRepetitiveArr,
 } from '@/utils'
+import { Cookie, Storage } from '@/utils/storage'
+import { fetchCnodeList, fetchDemoData } from '@/utils/http/api'
 
 const Practice: React.FC = () => {
   const navigate = useNavigate()
@@ -75,6 +77,39 @@ const Practice: React.FC = () => {
 
   console.log('指定数组去重, id---', handleRepetitiveArr(arr1, 'id'));
   console.log('指定数组去重, 基本数据类型---', handleRepetitiveArr(arr2));
+
+  const cookie = new Cookie('ling')
+  const cookie2 = new Cookie()
+  console.log('创建的cookie 实例---', cookie);
+
+  cookie.setCookie('name', '小明', 10)
+  cookie2.setCookie('name', '小明')
+  cookie.setCookie('age', 28)
+  cookie.setCookie('hobby', ['唱', '跳', 'Rap'])
+  const name = 'hobby'
+  console.log('指定输出cookie 的值---', name, cookie.getCookie(name));
+  cookie.removeCookie('age')
+  // cookie.clearCookie()
+
+  const storage = new Storage('sessionStorage')
+  storage.setStorage('666', arr2)
+  storage.setStorage('1666', arr1)
+  console.log(storage.getStorage('666'));
+  // storage.removeStorage('666')
+  // storage.clearStorage()
+
+
+  useEffect(() => {
+    fetchCnodeList({
+      page: 1, tab: 'good', limit: 5
+    }).then(res => {
+      console.log('get 请求的接口数据, fetchCnodeList---', res);
+    })
+
+    fetchDemoData({ name: 'ling' }).then(res => {
+      console.log('post 请求的接口数据, fetchDemoData---', res);
+    })
+  }, [])
 
 
   const change = () => {

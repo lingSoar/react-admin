@@ -1,4 +1,4 @@
-// import fetch from '.'
+import fetch from '.'
 
 interface ILogin {
   username: string
@@ -25,7 +25,12 @@ const userStore: IUserStore = {
   ling: ['123'],
 }
 
-// 模拟一个接口请求
+/**
+ * @description 模拟一个接口请求
+ * @param {string} url 接口地址
+ * @param {ILogin} payload 请求参数
+ * @return Promise
+ */
 function mockApi(url: string, payload: ILogin) {
   const login = (data: ILogin) => {
     return new Promise((resolve, reject) => {
@@ -47,6 +52,20 @@ function mockApi(url: string, payload: ILogin) {
     default:
       return
   }
-
 }
+
 export const fetchLogin = ({ username, password }: ILogin) => mockApi('/login', { username, password })
+
+
+// 接口测试
+interface ICnode {
+  page: number,
+  tab: 'good' | 'share' | 'ask' | 'job' | '',
+  limit: number
+}
+export const fetchCnodeList = (payload: ICnode) => fetch('/api' + '/v1/topics', payload, 'GET')
+
+interface IDemo {
+  name: string
+}
+export const fetchDemoData = (payload: IDemo) => fetch('/demo' + '/demo', payload)

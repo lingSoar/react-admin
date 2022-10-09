@@ -1,7 +1,3 @@
-/**
- * @useMenu 图片懒加载
- */
-
 import React, { Fragment, useCallback, useMemo } from 'react'
 
 interface IImages {
@@ -11,6 +7,12 @@ interface IImages {
   [propName: string]: any
 }
 
+/**
+ * @description 图片懒加载的自定义hook
+ * @param {IImages[]} imgs 懒加载的图片数组
+ * @param {React.CSSProperties} imgsStyle 图片的样式配置
+ * @return React.ReactNode
+ */
 export default function useLazyImgs(imgs: IImages[], imgsStyle?: React.CSSProperties) {
   const allTarget = useMemo(() => {
     const refs: HTMLImageElement[] = []

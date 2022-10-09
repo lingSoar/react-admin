@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { Button, message } from 'antd'
-import { clearUserInf, changeUserInf } from '@/store/actions/user'
+import { removeUserInf, changeUserInf } from '@/store/actions/user'
 import usePermission from '@/hooks/usePermission'
 
 const Home: React.FC = () => {
@@ -10,7 +10,7 @@ const Home: React.FC = () => {
   const dispatch = useDispatch()
 
   const handleUser = (user: string) => {
-    dispatch(clearUserInf('userInf'))
+    dispatch(removeUserInf('userInf'))
     dispatch(changeUserInf(user))
     message.info('用户信息改变，重新登陆')
     setTimeout(() => {
