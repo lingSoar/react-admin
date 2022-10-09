@@ -92,10 +92,10 @@ const Practice: React.FC = () => {
   // cookie.clearCookie()
 
   const storage = new Storage('sessionStorage')
-  storage.setStorage('666', arr2)
-  storage.setStorage('1666', arr1)
-  console.log(storage.getStorage('666'));
-  // storage.removeStorage('666')
+  storage.setStorage('storage1', arr1)
+  storage.setStorage('storage2', arr2)
+  console.log('输出storage 的值---', 'storage1', storage.getStorage('storage1'));
+  // storage.removeStorage('storage1')
   // storage.clearStorage()
 
 
