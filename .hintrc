@@ -9,6 +9,11 @@
       {
         "ignore": [
           "transition",
+          "transform",
+          "flex",
+          "flex-direction",
+          "flex-shrink",
+          "text-shadow",
           "-webkit-box-orient",
           "-webkit-line-clamp"
         ]

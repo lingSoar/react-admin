@@ -485,7 +485,7 @@ export const handleRepetitiveArr = <T>(arr: Array<T>, key?: string) => {
 
   if (key) {
     const hasItem = (current: Array<T>, target: string) => current.some((t: any) => t[key] === target)
-    
+
     return arr.reduce((pre: Array<T>, item: any) => {
       if (hasItem(pre, item[key])) return pre
 

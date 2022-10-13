@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react'
 import CircularScale from '@/components/progress/circular'
 import Carousel from '@/components/carousel'
+import Verification from '@/components/verification'
 import useLazyImgs from '@/hooks/useLazyImgs'
 import download from '@/utils/download'
 import './index.scss'
@@ -122,6 +123,19 @@ const CustomElement: React.FC = () => {
         <div style={{ border: '1px solid red', width: 200, height: 300, marginTop: 10, overflow: 'auto', }} >
           {images}
         </div>
+      </div>
+
+      <div className='demo'>
+        <h1>随机验证码</h1>
+        <Verification
+          length={5}
+          // style={{
+          //   width: 500,
+          //   height: 100,
+          //   dot: true,
+          //   line: false
+          // }}
+        />
       </div>
     </>
   )

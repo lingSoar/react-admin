@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-named-as-default
 import produce from 'immer'
-import { SET_USERINF, REMOVE_USERINF, CHANGE_USERINF } from '../constant'
 import storage from '@/utils/storage'
+import { SET_USERINF, REMOVE_USERINF, CHANGE_USERINF } from '../constant'
 
 const userInf = storage.getStorage('userInf')
 const initState: IUserState = {

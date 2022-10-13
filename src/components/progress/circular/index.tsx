@@ -1,5 +1,5 @@
 /**
- * @CircularScale 定制化的进度圈组件
+ * @description 定制化的进度圈组件
  */
 import React, { useMemo } from 'react'
 import './index.scss'

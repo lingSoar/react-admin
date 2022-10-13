@@ -12,6 +12,18 @@ interface IUserState {
 }
 
 /**
+ * @description tables：头部的tabs 标签页的类型定义
+ */
+interface ITable {
+  title: string
+  path: string
+}
+
+interface ITableState {
+  tableList: ITable[]
+}
+
+/**
  * @description dispatch 派发action 的类型定义
  */
 interface IDispatchPayload<T> {
@@ -32,4 +44,5 @@ interface IUser {
  */
 interface IStore {
   user: IUserState
+  tables: ITableState
 }

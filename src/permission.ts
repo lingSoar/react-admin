@@ -82,4 +82,5 @@ const usePermission = () => {
   const routes: Array<IRoute> = useMemo(() => filterAsyncRoutes(asyncRoutes, roles), [roles])
   return routes
 }
+
 export default usePermission

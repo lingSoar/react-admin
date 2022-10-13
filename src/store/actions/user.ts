@@ -1,5 +1,6 @@
-import { SET_USERINF, REMOVE_USERINF, CHANGE_USERINF } from '../constant'
 import { fetchLogin } from '@/utils/http/api'
+import { SET_USERINF, REMOVE_USERINF, CHANGE_USERINF } from '../constant'
+
 
 /**
  * @description 存储用户信息

@@ -5,7 +5,7 @@
  */
 import React from 'react'
 import { Navigate } from 'react-router-dom'
-import { HomeOutlined } from '@ant-design/icons'
+import { HomeOutlined, CalculatorOutlined } from '@ant-design/icons'
 import lazyLoad from '@/routes/utils'
 import { IRoute } from '@/route'
 
@@ -24,14 +24,111 @@ export const asyncRoutes: Array<IRoute> = [
   {
     path: '/practice',
     name: '练习',
-    icon: 'CalculatorOutlined',
+    icon: <CalculatorOutlined />,
     element: Practice,
     meta: {
       roles: ['admin', 'editor'],
     },
   },
   {
+    path: '/apractice',
+    name: '练习1',
+    icon: <CalculatorOutlined />,
+    element: User,
+    meta: {
+      roles: ['admin', 'editor'],
+    },
+  },
+  {
+    path: '/bpractice',
+    name: '练习2',
+    icon: <CalculatorOutlined />,
+    element: User,
+    meta: {
+      roles: ['admin', 'editor'],
+    },
+  },
+  {
+    path: '/cpractice',
+    name: '练习3',
+    icon: <CalculatorOutlined />,
+    element: User,
+    meta: {
+      roles: ['admin', 'editor'],
+    },
+  },
+  {
+    path: '/dpractice',
+    name: '练习4',
+    icon: <CalculatorOutlined />,
+    element: User,
+    meta: {
+      roles: ['admin', 'editor'],
+    },
+  },
+  {
+    path: '/epractice',
+    name: '练习5',
+    icon: <CalculatorOutlined />,
+    element: User,
+    meta: {
+      roles: ['admin', 'editor'],
+    },
+  },
+  {
+    path: '/fpractice',
+    name: '练习6',
+    icon: <CalculatorOutlined />,
+    element: User,
+    meta: {
+      roles: ['admin', 'editor'],
+    },
+  },
+  {
+    path: '/gpractice',
+    name: '练习7',
+    icon: <CalculatorOutlined />,
+    element: User,
+    meta: {
+      roles: ['admin', 'editor'],
+    },
+  },
+  {
+    path: '/hpractice',
+    name: '练习8',
+    icon: <CalculatorOutlined />,
+    element: User,
+    meta: {
+      roles: ['admin', 'editor'],
+    },
+  },
+  {
+    path: '/ipractice',
+    name: '练习9',
+    icon: <CalculatorOutlined />,
+    element: User,
+    meta: {
+      roles: ['admin', 'editor'],
+    },
+  },
+  {
+    path: '/jpractice',
+    name: '练习10',
+    icon: <CalculatorOutlined />,
+    element: User,
+    meta: {
+      roles: ['admin', 'editor'],
+    },
+  },
+  {
     path: '/charts/line/a/other',
+    element: Other,
+    meta: {
+      roles: ['admin', 'editor'],
+    },
+  },
+  {
+    path: '/other1',
     element: Other,
     meta: {
       roles: ['admin', 'editor'],
@@ -49,6 +146,40 @@ export const asyncRoutes: Array<IRoute> = [
     name: '用户',
     icon: 'TeamOutlined',
     element: User,
+    children: [
+      {
+        path: '/user/a',
+        name: '用户1',
+        icon: 'TeamOutlined',
+        element: User,
+      },
+      {
+        path: '/user/b',
+        name: '用户2',
+        icon: 'TeamOutlined',
+        element: User,
+      },
+    ]
+  },
+  {
+    path: '/auser1',
+    name: '用户66',
+    icon: 'TeamOutlined',
+    element: User,
+    children: [
+      {
+        path: '/auser1/a1',
+        name: '用户66-1',
+        icon: 'TeamOutlined',
+        element: User,
+      },
+      {
+        path: '/auser1/b1',
+        name: '用户66-2',
+        icon: 'TeamOutlined',
+        element: User,
+      },
+    ]
   },
   {
     path: '/component',
@@ -83,13 +214,33 @@ export const asyncRoutes: Array<IRoute> = [
         children: [
           {
             path: '/charts/line/a',
-            name: '柱状图',
+            name: '柱状图1',
             icon: 'BarChartOutlined',
             element: Line,
             meta: {
               roles: ['admin']
             },
+            children: [
+              {
+                path: '/charts/line/a/b',
+                name: '柱状图1-1',
+                icon: 'BarChartOutlined',
+                element: Pie,
+                meta: {
+                  roles: ['admin']
+                },
+              }
+            ]
           },
+          {
+            path: '/charts/line/b',
+            name: '柱状图2',
+            icon: 'BarChartOutlined',
+            element: Line,
+            meta: {
+              roles: ['admin']
+            },
+          }
         ]
       },
       {

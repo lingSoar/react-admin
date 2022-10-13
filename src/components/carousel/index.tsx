@@ -1,3 +1,6 @@
+/**
+ * @description 轮播图组件
+ */
 import React, { useState, useRef, useEffect, useReducer, useCallback, useMemo } from 'react'
 import './index.scss'
 

@@ -49,7 +49,7 @@ const config = {
       template: resolve('public/index.html'),
       filename: 'index.html',
       inject: 'body',
-      title: 'demo',
+      title: 'react-admin',
       // 给打包的结果添加favicon 图标
       favicon: resolve('public/favicon.ico')
     }),

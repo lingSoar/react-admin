@@ -1,4 +1,4 @@
-/*清除默认边距*/
+/* 清除默认边距 */
 body,
 html,
 span,
@@ -33,6 +33,19 @@ th {
   box-sizing: border-box;
 }
 
+/* 优化滚动条样式 */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: #fff;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #dddee0;
+  border-radius: 20px;
+  box-shadow: inset 0 0 0 #fff;
+}
+
 body,
 html {
   height: 100%;
@@ -43,13 +56,13 @@ html {
   }
 }
 
-/*去掉无序及有序列表自带的样式*/
+/* 去掉无序及有序列表自带的样式 */
 ul,
 ol {
   list-style: none;
 }
 
-/*去除超链接自带的下划线*/
+/* 去除超链接自带的下划线 */
 a {
   text-decoration: none;
   display: inline-block;
@@ -68,7 +81,7 @@ img {
   // height: 100%;
 }
 
-/*取消标题自带的加粗效果*/
+/* 取消标题自带的加粗效果 */
 h1,
 h2,
 h3,
@@ -80,13 +93,13 @@ strong {
   font-weight: normal;
 }
 
-/*去掉列表自带的边框 以及 输入内容时出现的边框*/
+/* 去掉列表自带的边框 以及 输入内容时出现的边框 */
 input {
   border: none;
   outline: none;
 }
 
-/*万能清除浮动法*/
+/* 万能清除浮动法 */
 .clear::after {
   content: '';
   clear: both;

@@ -5,7 +5,6 @@ $prefixCls: admin-circular;
   position: absolute;
   top: 50%;
   left: 50%;
-  -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
 
@@ -49,7 +48,6 @@ $prefixCls: admin-circular;
       width: 1px;
       position: absolute;
       left: 50%;
-      -ms-transform: translateX(-50%);
       transform: translateX(-50%);
       display: block;
     }

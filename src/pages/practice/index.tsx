@@ -106,7 +106,7 @@ const Practice: React.FC = () => {
       console.log('get 请求的接口数据, fetchCnodeList---', res);
     })
 
-    fetchDemoData({ name: 'ling' }).then(res => {
+    false && fetchDemoData({ name: 'ling' }).then(res => {
       console.log('post 请求的接口数据, fetchDemoData---', res);
     })
   }, [])

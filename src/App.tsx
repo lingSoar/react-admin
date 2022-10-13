@@ -3,11 +3,9 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import usePermission, { handleRoles } from '@/permission'
 import routes from '@/routes'
-
 import Login from '@/pages/login'
 import LayoutComponent from '@/components/layout'
 import storage from './utils/storage'
-
 
 const App: React.FC = () => {
   const navigate = useNavigate()
@@ -43,13 +41,14 @@ const App: React.FC = () => {
   }, [navigate, pathname, user])
 
   useEffect(() => {
-    const path = storage.getStorage('openKeys')
+    const path = storage.getStorage('selected_key')
     if (path) {
       navigate(path)
     } else {
       navigate('/login')
     }
-  }, [navigate])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <Routes>

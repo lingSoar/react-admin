@@ -73,7 +73,7 @@ export class Cookie {
 	 * @description 设置cookie
 	 * @param {string} name cookie 的名称
 	 * @param {any} value cookie 的值
-	 * @param {number=} expire 过期时间
+	 * @param {number | null} expire 过期时间
 	 * @example 如果过期时间为设置，默认关闭浏览器自动删除
 	 */
 	setCookie(name: string, value: any, expire: number | null = AdminConfig.DEFAULT_CACHE_TIME) {
