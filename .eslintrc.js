@@ -45,13 +45,13 @@ module.exports = {
      *  2-'error'：如果代码违法当前规则，直接给Error 错误
      */
     rules: {
-        'semi': 'off',
-        'react/display-name': 0,
-        'import/no-unresolved': 0,
-        '@typescript-eslint/no-explicit-any': 0,
-        'jsx-a11y/click-events-have-key-events': 0,
-        'jsx-a11y/no-noninteractive-element-interactions': 0,
-        'jsx-a11y/no-static-element-interactions': 0,
-        "@typescript-eslint/no-non-null-assertion": 0
+        'semi': 'off', /* 要求或禁止使用分号代替 ASI */
+        'react/display-name': 0, /* 定义调试时的组件name */
+        'import/no-unresolved': 0, /* 禁止通过导入加载指定的模块 */
+        'jsx-a11y/click-events-have-key-events': 0, /* 强制一个可点击的非交互元素至少有一个键盘事件监听器 */
+        'jsx-a11y/no-noninteractive-element-interactions': 0, /* 不应该为非交互元素分配鼠标或键盘事件监听器 */
+        'jsx-a11y/no-static-element-interactions': 0, /* 强制具有单击处理程序的非交互式、可见元素(如<div>)使用role属性 */
+        '@typescript-eslint/no-explicit-any': 0, /* 允许使用any */
+        "@typescript-eslint/no-non-null-assertion": 0 /* 不允许使用非空断言!后缀运算符 */
     }
 }

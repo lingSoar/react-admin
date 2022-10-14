@@ -11,11 +11,11 @@ interface IBreadcrumbNav {
 
 const BreadcrumbNav: React.FC<IBreadcrumbNav> = (props) => {
   const { cls, collapsed, setCollapsed } = props
-  const header_title = storage.getStorage('header_title')
+  const headerTitle = storage.getStorage('header_title')
 
   const navigate = useNavigate()
   const { pathname } = useLocation() as { pathname: string, state: any }
-  const [title, setTitle] = useState<string[]>(header_title ?? ['首页'])
+  const [title, setTitle] = useState<string[]>(headerTitle ?? ['首页'])
 
   useEffect(() => {
     setTitle(storage.getStorage('header_title'))

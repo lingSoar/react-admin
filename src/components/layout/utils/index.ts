@@ -86,7 +86,7 @@ export const filterRouteName = (routes: IRoute[], path: string) => {
  * @return boolean
  */
 export const isHasTab = (tableList: ITable[], tab: ITabs) => {
-  return tableList.some((i: ITabs) => tab.title === i.title && tab.path === i.path)
+  return tableList.some(i => tab.title === i.title && tab.path === i.path)
 }
 
 
@@ -102,6 +102,3 @@ export const handleDeletePath = (tables: ITable[], path: string) => {
 
   return tables[currentIndex]?.path
 }
-
-
-
