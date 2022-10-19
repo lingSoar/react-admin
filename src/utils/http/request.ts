@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosError, AxiosResponse } from 'axios'
 import { message, Modal } from 'antd'
-import { getLocal } from '@/utils/storage'
+import storage from '@/utils/storage'
 import AdminConfig, { BASE_URL } from '@/config'
 interface ResponseData<T> {
   code: number,
@@ -17,7 +17,7 @@ const service = axios.create({
 // 请求拦截
 service.interceptors.request.use(
   (config: AxiosRequestConfig) => {
-    const token = getLocal(AdminConfig.TOKEN_KEY)
+    const token = storage.getStorage(AdminConfig.TOKEN_KEY)
 
     // 获取用户token，用于校验
     if (token) {
@@ -31,6 +31,8 @@ service.interceptors.request.use(
 // 响应拦截
 service.interceptors.response.use(
   (response: AxiosResponse<ResponseData<any>>) => {
+    return response.data.data
+
     if (!response.data) {
       return Promise.resolve(response)
     }

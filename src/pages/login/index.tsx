@@ -2,8 +2,10 @@ import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button, Checkbox, Form, Input, message } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
-import { getUserInf } from '@/store/actions/user'
+import { setUserInf } from '@/store/actions/user'
+import storage from '@/utils/storage'
 import './login.scss'
+
 // 类名基准
 const baseCls = 'admin-login'
 
@@ -15,14 +17,10 @@ const Login: React.FC = () => {
 
   const onFinish = (values: IUser) => {
     const { password, username } = values
-    dispatch(getUserInf({ username, password }) as any).then(() => {
+    dispatch(setUserInf({ username, password }) as any).then(() => {
       message.success('登录成功')
-      navigate('/home', {
-        replace: false,
-        state: {
-          name: '首页'
-        }
-      })
+      storage.setStorage('selected_key', '/home')
+      navigate('/home', { replace: false })
     }).catch((err: any) => {
       message.error(err.error)
     })

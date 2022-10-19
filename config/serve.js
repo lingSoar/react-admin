@@ -26,6 +26,17 @@ module.exports = {
     },
     static: {
       directory: resolve('public'), // 托管静态资源public 文件夹
+    },
+    proxy: {
+      '/api': { // 跨域代理的配置
+        target: 'https://cnodejs.org',
+        changeOrigin: true
+      },
+      '/demo': { // 跨域代理的配置
+        target: 'http://127.0.0.1:4523/mock/984871',
+        changeOrigin: true,
+        pathRewrite: { '^/demo': '' },
+      },
     }
   },
   plugins: [

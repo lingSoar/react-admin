@@ -4,13 +4,15 @@ export interface Config {
   LOGIN_EXPIRE: number,
   API_URL: string,
   TOKEN_KEY: string,
+  DEFAULT_CACHE_TIME: number,
+
   layout: 'side' | 'top',
   theme: 'dark' | 'light',
   fixedHeader: boolean,
   contentWidth: 'fluid' | 'fixed',
   colorWeak: boolean,
   title: string,
-  logo?: string
+  logo?: string,
 }
 
 const AdminConfig: Config = {
@@ -28,6 +30,9 @@ const AdminConfig: Config = {
 
   // 本地存储token 的key
   TOKEN_KEY: 'Admin_Token_key',
+
+  // cookie 设置的过期时间
+  DEFAULT_CACHE_TIME: 60 * 60 * 24 * 7,
 
   // 默认菜单栏位置
   layout: 'side',

@@ -2,16 +2,19 @@ import React, { Fragment } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { Button, message } from 'antd'
-import { clearUserInf, changeUserInf } from '@/store/actions/user'
+import { removeUserInf, changeUserInf } from '@/store/actions/user'
+import { clearTableLists } from '@/store/actions/tables'
 import usePermission from '@/hooks/usePermission'
 
 const Home: React.FC = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const handleUser = (user: string) => {
-    dispatch(clearUserInf('userInf'))
+  const handleLogin = (user: string) => {
+    dispatch(removeUserInf('userInf'))
     dispatch(changeUserInf(user))
+    dispatch(clearTableLists())
+
     message.info('用户信息改变，重新登陆')
     setTimeout(() => {
       navigate('/login', { replace: true })
@@ -39,15 +42,14 @@ const Home: React.FC = () => {
     )
   })
 
-
   return (
     <Fragment>
       <h1>首页</h1>
       <div>
         <h1>切换用户</h1>
-        <Button type='primary' danger onClick={() => handleUser('admin')}>admin</Button>&nbsp;
-        <Button type='primary' danger onClick={() => handleUser('editor')}>editor</Button>&nbsp;
-        <Button type='primary' danger onClick={() => handleUser('visitor')}>visitor</Button>
+        <Button type='primary' danger onClick={() => handleLogin('admin')}>admin</Button>&nbsp;
+        <Button type='primary' danger onClick={() => handleLogin('editor')}>editor</Button>&nbsp;
+        <Button type='primary' danger onClick={() => handleLogin('visitor')}>visitor</Button>
       </div>
 
       <div>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   handleThousands,
@@ -11,8 +11,11 @@ import {
   isNullObject,
   roughFormatTime,
   carefulFormatTime,
-  turnCase
+  turnCase,
+  handleRepetitiveArr,
 } from '@/utils'
+import { Cookie, Storage } from '@/utils/storage'
+import { fetchCnodeList, fetchDemoData } from '@/utils/http/api'
 
 const Practice: React.FC = () => {
   const navigate = useNavigate()
@@ -56,6 +59,58 @@ const Practice: React.FC = () => {
   console.log('大小写转换，仅仅首字母大写---', turnCase(str, 'initialCapital'));
   console.log('大小写转换，所有词组首字母大写---', turnCase(str, 'allInitialCapital'));
   console.log('大小写转换，默认---', turnCase(str));
+
+
+  const arr1 = [
+    { id: 1, name: '刘麻子', age: 18, hobby: 1, },
+    { id: 2, name: '张三', age: 28, hobby: 1, },
+    { id: 1, name: '李四', age: 18, hobby: 1, },
+    { id: 3, name: '张三', age: 38, hobby: 1, },
+    { id: 4, name: '王老五', age: 19, hobby: 1, },
+    { id: 4, name: '刘麻子', age: 16, hobby: 1, },
+    { id: 5, name: '臭猪猪', age: 21, hobby: 1, },
+    { id: 6, name: '傻憨憨', age: 25, hobby: 1, },
+    { id: 3, name: '土老帽', age: 19, hobby: 1, },
+    { id: 2, name: '李四', age: 38, hobby: 1, },
+  ]
+  const arr2 = [1, 2, 3, 4, 5, 1, 3, 2,]
+
+  console.log('指定数组去重, id---', handleRepetitiveArr(arr1, 'id'));
+  console.log('指定数组去重, 基本数据类型---', handleRepetitiveArr(arr2));
+
+  const cookie = new Cookie('ling')
+  const cookie2 = new Cookie()
+  console.log('创建的cookie 实例---', cookie);
+
+  cookie.setCookie('name', '小明', 10)
+  cookie2.setCookie('name', '小明')
+  cookie.setCookie('age', 28)
+  cookie.setCookie('hobby', ['唱', '跳', 'Rap'])
+  const name = 'hobby'
+  console.log('指定输出cookie 的值---', name, cookie.getCookie(name));
+  cookie.removeCookie('age')
+  // cookie.clearCookie()
+
+  const storage = new Storage('sessionStorage')
+  storage.setStorage('storage1', arr1)
+  storage.setStorage('storage2', arr2)
+  console.log('输出storage 的值---', 'storage1', storage.getStorage('storage1'));
+  // storage.removeStorage('storage1')
+  // storage.clearStorage()
+
+
+  useEffect(() => {
+    fetchCnodeList({
+      page: 1, tab: 'good', limit: 5
+    }).then(res => {
+      console.log('get 请求的接口数据, fetchCnodeList---', res);
+    })
+
+    false && fetchDemoData({ name: 'ling' }).then(res => {
+      console.log('post 请求的接口数据, fetchDemoData---', res);
+    })
+  }, [])
+
 
   const change = () => {
     navigate('/practice/other')

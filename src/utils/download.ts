@@ -1,5 +1,8 @@
 /**
- * @download 支持图片下载
+ * @description 支持图片下载
+ * @param {string} link 图片的链接地址
+ * @param {string} picName 下载后图片的名称
+ * @return void
  */
 const download = (link: string, picName?: string): void => {
   // 创建一个img，等价于 document.createElement('img')

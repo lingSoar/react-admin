@@ -1,11 +1,12 @@
 /**
- * 路由配置中存在name 的，且当前登录用户拥有访问权限的，才会被渲染到菜单栏
- * 路由配置meta 中的roles 表示该路由可访问的用户，其子路由中设置的权限用户不得超出父级所配置的权限用户
+ * @description
+ *   路由配置中存在name 的，且当前登录用户拥有访问权限的，才会被渲染到菜单栏
+ *   路由配置meta 中的roles 表示该路由可访问的用户，其子路由中设置的权限用户不得超出父级所配置的权限用户
  */
 import React from 'react'
 import { Navigate } from 'react-router-dom'
-import { HomeOutlined } from '@ant-design/icons'
-import lazyLoad from '@/utils/lazyLoad'
+import { HomeOutlined, CalculatorOutlined } from '@ant-design/icons'
+import lazyLoad from '@/routes/utils'
 import { IRoute } from '@/route'
 
 const Pie = lazyLoad(React.lazy(() => import('@/pages/charts/pie')))
@@ -23,14 +24,160 @@ export const asyncRoutes: Array<IRoute> = [
   {
     path: '/practice',
     name: '练习',
-    icon: 'CalculatorOutlined',
+    icon: <CalculatorOutlined />,
     element: Practice,
     meta: {
       roles: ['admin', 'editor'],
     },
   },
   {
+    path: '/apractice',
+    name: '练习1',
+    icon: <CalculatorOutlined />,
+    element: User,
+    meta: {
+      roles: ['admin'],
+    },
+  },
+  {
+    path: '/bpractice',
+    name: '练习2',
+    icon: <CalculatorOutlined />,
+    element: User,
+    meta: {
+      roles: ['admin'],
+    },
+  },
+  {
+    path: '/cpractice',
+    name: '练习3',
+    icon: <CalculatorOutlined />,
+    element: User,
+    meta: {
+      roles: ['admin', 'editor'],
+    },
+    children: [
+      {
+        path: '/cpractice/1',
+        name: '练习3-1',
+        icon: <CalculatorOutlined />,
+        element: User,
+        meta: {
+          roles: ['admin', 'editor'],
+        },
+      },
+      {
+        path: '/cpractice/2',
+        name: '练习3-2',
+        icon: <CalculatorOutlined />,
+        element: User,
+        meta: {
+          roles: ['admin'],
+        },
+      },
+      {
+        path: '/cpractice/3',
+        name: '练习3-3',
+        icon: <CalculatorOutlined />,
+        element: User,
+        meta: {
+          roles: ['admin', 'editor'],
+        },
+        children: [
+          {
+            path: '/cpractice/3/1',
+            name: '练习3-3-1',
+            icon: <CalculatorOutlined />,
+            element: User,
+            meta: {
+              roles: ['editor'],
+            },
+          },
+          {
+            path: '/cpractice/3/2',
+            name: '练习3-3-2',
+            icon: <CalculatorOutlined />,
+            element: User,
+            meta: {
+              roles: ['admin'],
+            },
+          }
+        ]
+      },
+    ]
+  },
+  {
+    path: '/dpractice',
+    name: '练习4',
+    icon: <CalculatorOutlined />,
+    element: User,
+    meta: {
+      roles: ['admin'],
+    },
+  },
+  {
+    path: '/epractice',
+    name: '练习5',
+    icon: <CalculatorOutlined />,
+    element: User,
+    meta: {
+      roles: ['admin'],
+    },
+  },
+  {
+    path: '/fpractice',
+    name: '练习6',
+    icon: <CalculatorOutlined />,
+    element: User,
+    meta: {
+      roles: ['admin'],
+    },
+  },
+  {
+    path: '/gpractice',
+    name: '练习7',
+    icon: <CalculatorOutlined />,
+    element: User,
+    meta: {
+      roles: ['admin'],
+    },
+  },
+  {
+    path: '/hpractice',
+    name: '练习8',
+    icon: <CalculatorOutlined />,
+    element: User,
+    meta: {
+      roles: ['admin'],
+    },
+  },
+  {
+    path: '/ipractice',
+    name: '练习9',
+    icon: <CalculatorOutlined />,
+    element: User,
+    meta: {
+      roles: ['admin'],
+    },
+  },
+  {
+    path: '/jpractice',
+    name: '练习10',
+    icon: <CalculatorOutlined />,
+    element: User,
+    meta: {
+      roles: ['admin'],
+    },
+  },
+  {
     path: '/charts/line/a/other',
+    element: Other,
+    meta: {
+      roles: ['admin', 'editor'],
+    },
+  },
+  {
+    path: '/other1',
     element: Other,
     meta: {
       roles: ['admin', 'editor'],
@@ -48,6 +195,40 @@ export const asyncRoutes: Array<IRoute> = [
     name: '用户',
     icon: 'TeamOutlined',
     element: User,
+    children: [
+      {
+        path: '/user/a',
+        name: '用户1',
+        icon: 'TeamOutlined',
+        element: User,
+      },
+      {
+        path: '/user/b',
+        name: '用户2',
+        icon: 'TeamOutlined',
+        element: User,
+      },
+    ]
+  },
+  {
+    path: '/auser1',
+    name: '用户66',
+    icon: 'TeamOutlined',
+    element: User,
+    children: [
+      {
+        path: '/auser1/a1',
+        name: '用户66-1',
+        icon: 'TeamOutlined',
+        element: User,
+      },
+      {
+        path: '/auser1/b1',
+        name: '用户66-2',
+        icon: 'TeamOutlined',
+        element: User,
+      },
+    ]
   },
   {
     path: '/component',
@@ -82,13 +263,33 @@ export const asyncRoutes: Array<IRoute> = [
         children: [
           {
             path: '/charts/line/a',
-            name: '柱状图',
+            name: '柱状图1',
             icon: 'BarChartOutlined',
             element: Line,
             meta: {
               roles: ['admin']
             },
+            children: [
+              {
+                path: '/charts/line/a/b',
+                name: '柱状图1-1',
+                icon: 'BarChartOutlined',
+                element: Pie,
+                meta: {
+                  roles: ['admin']
+                },
+              }
+            ]
           },
+          {
+            path: '/charts/line/b',
+            name: '柱状图2',
+            icon: 'BarChartOutlined',
+            element: Line,
+            meta: {
+              roles: ['admin']
+            },
+          }
         ]
       },
       {

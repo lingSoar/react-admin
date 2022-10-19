@@ -1,6 +1,7 @@
 /**
- * @recalculate 根据屏幕宽度动态设置根字体大小，rem布局
- */ 
+ * @description 根据屏幕宽度动态设置根字体大小，rem布局
+ * @return void
+ */
 const recalculate = () => {
   // 获取html 元素
   const docElement = document.documentElement || document.body
