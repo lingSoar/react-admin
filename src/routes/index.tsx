@@ -36,7 +36,7 @@ export const asyncRoutes: Array<IRoute> = [
     icon: <CalculatorOutlined />,
     element: User,
     meta: {
-      roles: ['admin', 'editor'],
+      roles: ['admin'],
     },
   },
   {
@@ -45,7 +45,7 @@ export const asyncRoutes: Array<IRoute> = [
     icon: <CalculatorOutlined />,
     element: User,
     meta: {
-      roles: ['admin', 'editor'],
+      roles: ['admin'],
     },
   },
   {
@@ -56,6 +56,55 @@ export const asyncRoutes: Array<IRoute> = [
     meta: {
       roles: ['admin', 'editor'],
     },
+    children: [
+      {
+        path: '/cpractice/1',
+        name: '练习3-1',
+        icon: <CalculatorOutlined />,
+        element: User,
+        meta: {
+          roles: ['admin', 'editor'],
+        },
+      },
+      {
+        path: '/cpractice/2',
+        name: '练习3-2',
+        icon: <CalculatorOutlined />,
+        element: User,
+        meta: {
+          roles: ['admin'],
+        },
+      },
+      {
+        path: '/cpractice/3',
+        name: '练习3-3',
+        icon: <CalculatorOutlined />,
+        element: User,
+        meta: {
+          roles: ['admin', 'editor'],
+        },
+        children: [
+          {
+            path: '/cpractice/3/1',
+            name: '练习3-3-1',
+            icon: <CalculatorOutlined />,
+            element: User,
+            meta: {
+              roles: ['editor'],
+            },
+          },
+          {
+            path: '/cpractice/3/2',
+            name: '练习3-3-2',
+            icon: <CalculatorOutlined />,
+            element: User,
+            meta: {
+              roles: ['admin'],
+            },
+          }
+        ]
+      },
+    ]
   },
   {
     path: '/dpractice',
@@ -63,7 +112,7 @@ export const asyncRoutes: Array<IRoute> = [
     icon: <CalculatorOutlined />,
     element: User,
     meta: {
-      roles: ['admin', 'editor'],
+      roles: ['admin'],
     },
   },
   {
@@ -72,7 +121,7 @@ export const asyncRoutes: Array<IRoute> = [
     icon: <CalculatorOutlined />,
     element: User,
     meta: {
-      roles: ['admin', 'editor'],
+      roles: ['admin'],
     },
   },
   {
@@ -81,7 +130,7 @@ export const asyncRoutes: Array<IRoute> = [
     icon: <CalculatorOutlined />,
     element: User,
     meta: {
-      roles: ['admin', 'editor'],
+      roles: ['admin'],
     },
   },
   {
@@ -90,7 +139,7 @@ export const asyncRoutes: Array<IRoute> = [
     icon: <CalculatorOutlined />,
     element: User,
     meta: {
-      roles: ['admin', 'editor'],
+      roles: ['admin'],
     },
   },
   {
@@ -99,7 +148,7 @@ export const asyncRoutes: Array<IRoute> = [
     icon: <CalculatorOutlined />,
     element: User,
     meta: {
-      roles: ['admin', 'editor'],
+      roles: ['admin'],
     },
   },
   {
@@ -108,7 +157,7 @@ export const asyncRoutes: Array<IRoute> = [
     icon: <CalculatorOutlined />,
     element: User,
     meta: {
-      roles: ['admin', 'editor'],
+      roles: ['admin'],
     },
   },
   {
@@ -117,7 +166,7 @@ export const asyncRoutes: Array<IRoute> = [
     icon: <CalculatorOutlined />,
     element: User,
     meta: {
-      roles: ['admin', 'editor'],
+      roles: ['admin'],
     },
   },
   {

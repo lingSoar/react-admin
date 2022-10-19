@@ -6,6 +6,18 @@ interface ITabs {
   path: string
 }
 
+/* 树选择的数据类型 */
+export interface ITreeData {
+  id: string,
+  pId: number | string,
+  value: string,
+  title: string,
+  isLeaf: boolean,
+  disabled: boolean,
+  item: IRoute | null,
+  children?: ITreeData[]
+}
+
 /**
  * @description 处理侧边菜单的展开项
  * @param {string} path 当前的路由
@@ -102,3 +114,49 @@ export const handleDeletePath = (tables: ITable[], path: string) => {
 
   return tables[currentIndex]?.path
 }
+
+
+/**
+ * @description 依旧用户权限路由，初始化树选择的数据
+ * @param {IRoute[]} routes 当前用户的权限路由
+ * @param {number | string} parentId 树结构中当前项的父id
+ * @return ITreeData[]
+ */
+export const initTreeData = (routes: IRoute[], parentId: number | string = 0): ITreeData[] => {
+  return routes.map(i => {
+    const { path, children } = i
+    return ({
+      id: path!,
+      pId: parentId,
+      value: path!,
+      title: path!,
+      isLeaf: children ? false : true,
+      disabled: children ? true : false,
+      item: children ? i : null
+    })
+  })
+}
+
+
+/**
+ * @description 处理树选择展开叶子的数据
+ * @param {ITreeData[]} data 当前的树结构数据
+ * @param {string} id 当前展开树的所属id
+ * @param {ITreeData[]} childrenTree 需要添加到当前id 下的children 数据
+ * @return ITreeData[]
+ */
+export const handleLoadTreeData = (data: ITreeData[], id: string, childrenTree: ITreeData[]) => {
+  const deepData = [...data]
+  deepData.forEach(item => {
+    if (item.id === id) {
+      item.children = childrenTree
+    }
+
+    if (item?.children && item.id !== id) {
+      handleLoadTreeData(item.children, id, childrenTree)
+    }
+  })
+
+  return deepData
+}
+
